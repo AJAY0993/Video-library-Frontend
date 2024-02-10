@@ -1,0 +1,30 @@
+.card {
+    width: 400px;
+    max-width: 100%;
+    border-radius: 1em;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    transition: all .3s ease-in-out;
+}
+
+.card>img {
+    aspect-ratio: 16/9;
+}
+
+.card:hover {
+    transform: translate(-.5em, -.5em);
+    box-shadow: .5em .5em var(--clr-dark), 1em 1em var(--clr-gray);
+}
+
+.card__content {
+    padding: .5em 1em;
+    background-color: var(--clr-light);
+}
+
+.card__title {
+    font-size: 1.3rem;
+    color: var(--clr-very-dark);
+    text-transform: capitalize;
+    margin: .5em 0;
+}
