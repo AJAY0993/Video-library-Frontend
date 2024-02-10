@@ -55,3 +55,9 @@
 .signupBtn:active {
     scale: .95;
 }
+
+@media (max-width:600px) {
+    .container {
+        min-height: calc(100vh - 60px);
+    }
+}

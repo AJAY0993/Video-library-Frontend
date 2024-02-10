@@ -5,12 +5,12 @@ function FilterButton({ text }) {
   const { state, reducerFunc, dispatch } = useData();
   const { setFilter } = reducerFunc;
   function onClick() {
-    setFilter({ state, action: { payload: text } }, dispatch);
+    setFilter({ state, action: { payload: text.toLowerCase() } }, dispatch);
   }
   return (
     <li
       className={`${styles.filterBtn} ${
-        text === state.filter ? "selected" : ""
+        text.toLowerCase() === state.filter ? "selected" : ""
       }`}
       onClick={onClick}
     >

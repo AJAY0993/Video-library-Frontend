@@ -7,6 +7,7 @@ import myToast from "../../utils/customToast";
 import Button from "../../components/Button/Button";
 
 function Signup() {
+  const usernameRef = useRef(null);
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const confirmPasswordRef = useRef(null);
@@ -18,6 +19,7 @@ function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (
+      !usernameRef.current?.value ||
       !passwordRef.current?.value ||
       !emailRef.current?.value ||
       !confirmPasswordRef.current?.value
@@ -30,7 +32,11 @@ function Signup() {
       return;
     }
     try {
-      signup(emailRef.current.value, passwordRef.current.value);
+      signup(
+        usernameRef.current.value,
+        emailRef.current.value,
+        passwordRef.current.value
+      );
     } catch (error) {
       myToast("error", "Error in Creating Account");
     }
@@ -40,7 +46,12 @@ function Signup() {
     <Layout>
       <div className={styles.container}>
         <form className={styles.signupForm} onSubmit={handleSubmit}>
-          <h2 className="sub-title">Sign up</h2>
+          <h2>Sign up</h2>
+          <input
+            type="username"
+            ref={usernameRef}
+            placeholder="username"
+          ></input>
           <input type="email" ref={emailRef} placeholder="email"></input>
           <input
             type="password"

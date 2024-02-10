@@ -16,6 +16,7 @@ import { ToastContainer } from "react-toastify";
 import { DataProvider } from "./context/DataContext";
 import PlaylistContainer from "./components/PlaylistContainer/PlaylistContainer";
 import VideosContainer from "./components/VideosContainer/VideosContainer";
+import Modal from "./components/Modal/Modal";
 function App() {
   return (
     <BrowserRouter>
@@ -24,6 +25,7 @@ function App() {
           <Routes>
             <Route index element={<Home />} />
             <Route path="/" element={<Home />} />
+            {/* <Route index element={<Modal />} /> */}
             <Route path="/explore" element={<Explore />}>
               <Route index element={<Videos />} />
               <Route path=":id" element={<VideoPlayer />} />

@@ -16,14 +16,6 @@
     object-fit: cover;
 }
 
-.card:hover {
-    box-shadow: 5px 5px var(--clr-light);
-    transition: .1s ease-in;
-    transform: translate(-5px, -5px);
-    cursor: pointer;
-    z-index: 10;
-}
-
 .title {
     font-weight: 500;
     padding: .7em;
@@ -42,7 +34,7 @@
 
 .videoCardFuncBtn {
     position: absolute;
-    bottom: 50px;
+    bottom: 3rem;
     right: 10px;
     height: 40px;
     width: 40px;
@@ -57,11 +49,28 @@
     max-height: 100%;
 }
 
-.card:hover .videoCardFuncBtn {
-    display: block;
+@media (width>600px) {
+    .card:hover {
+        box-shadow: 5px 5px var(--clr-light);
+        transition: .1s ease-in;
+        transform: translate(-5px, -5px);
+        cursor: pointer;
+        z-index: 10;
+    }
+
+    .card:hover .videoCardFuncBtn {
+        display: block;
+    }
+
+    .videoCardFuncBtn:hover {
+        background-color: var(--clr-dark);
+
+    }
 }
 
-.videoCardFuncBtn:hover {
-    background-color: var(--clr-dark);
-
+@media (width<=600px) {
+    .videoCardFuncBtn {
+        display: block;
+        bottom: 1.2rem;
+    }
 }

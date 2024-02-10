@@ -22,7 +22,7 @@ function Login() {
     <Layout>
       <div className={styles.container}>
         <form action="" className={styles.loginForm} onSubmit={handleSubmit}>
-          <h2 className="sub-title">Login</h2>
+          <h2>Login</h2>
           <input ref={emailRef} placeholder={"email"} />
           <input ref={passwordRef} placeholder={"password"} />
           <Button className="button--submit" onClick={handleSubmit}>

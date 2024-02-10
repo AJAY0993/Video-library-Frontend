@@ -222,6 +222,21 @@ function getPlaylistVideos(_, dispatch) {
 }
 
 function deletePlaylist(_, dispatch) {}
+
+async function likeVideo({ _, action }, dispatch) {
+  const token = localStorage.getItem("token");
+  const vidId = action.payload;
+  const configuration = {
+    methos: "PATCH",
+    url: `${BASE_URL}videos/${vidId}/like`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const res = await axios(configuration);
+  const data = res.data.data;
+  dispatch({ type: "UPDATE_LIKES", payload: data.likes });
+}
 const reducerFunc = {
   getVideos,
   getCategories,
@@ -234,6 +249,7 @@ const reducerFunc = {
   getPlaylists,
   getPlaylistVideos,
   deletePlaylist,
+  likeVideo,
 };
 
 function reducer(state, action) {
