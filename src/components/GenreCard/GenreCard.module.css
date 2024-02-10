@@ -1,0 +1,74 @@
+.card {
+    max-inline-size: 300px;
+    width: 100%;
+    aspect-ratio: 16/10;
+    border-radius: 1em;
+    color: white;
+    text-transform: uppercase;
+    background-color: var(--clr-dark);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all .1s ease-in;
+    cursor: pointer;
+}
+
+.card:hover {
+    background-blend-mode: multiply;
+    position: relative;
+    transform: translate(-5px, -5px);
+    box-shadow: 5px 5px var(--clr-light);
+}
+
+:global(.action) {
+    background-image: url('Images/GenreCardImages/action.jpg');
+}
+
+:global(.animation) {
+    background-image: url('Images/GenreCardImages/animation.jpg');
+}
+
+:global(.comedy) {
+    background-image: url('Images/GenreCardImages/comedy.jpg');
+}
+
+:global(.drama) {
+    background-image: url('Images/GenreCardImages/drama.jpg');
+}
+
+:global(.fantasy) {
+    background-image: url('Images/GenreCardImages/fantasy.jpg');
+}
+
+:global(.horror) {
+    background-image: url('Images/GenreCardImages/horror.jpg');
+}
+
+:global(.romance) {
+    background-image: url('Images/GenreCardImages/romance.jpg');
+}
+
+:global(.science-fiction) {
+    background-image: url('Images/GenreCardImages/science-fiction.jpg');
+}
+
+.cardTitle {
+    padding: .5em 1em;
+    border: 1px solid var(--clr-light);
+    color: var(--clr-light);
+    color: white;
+    font-weight: 500;
+    border-radius: 1em;
+}
+
+.card:hover .cardTitle {
+    color: var(--clr-theme);
+    border-color: var(--clr-theme);
+}
+
+:global(.link) {
+    text-decoration: none;
+}

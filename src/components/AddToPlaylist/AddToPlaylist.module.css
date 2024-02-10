@@ -1,0 +1,10 @@
+.container {
+    padding: 1em;
+}
+
+.closeBtn {
+    background-color: transparent;
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+}

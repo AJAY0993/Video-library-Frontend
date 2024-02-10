@@ -1,0 +1,43 @@
+.dropDown {
+    position: absolute;
+    top: 290px;
+    right: 0;
+    width: 200px;
+    border-radius: .5em;
+    background-color: var(--clr-dark);
+    overflow: visible;
+    z-index: 10;
+    overflow: hidden;
+}
+
+.dropDown ul {
+    padding: 0;
+    list-style: none;
+    color: var(--clr-light);
+    display: flex;
+    flex-direction: column;
+    gap: .5em;
+    text-align: left;
+
+}
+
+.dropDownItem {
+    font-size: .8em;
+    padding: .5em;
+    background-color: var(--clr-dark);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.dropDownItem img {
+    height: 1.5em;
+    width: 1.5em;
+    margin-right: .5em;
+    display: inline-block;
+}
+
+.dropDownItem:hover {
+    background-color: var(--clr-very-dark);
+}

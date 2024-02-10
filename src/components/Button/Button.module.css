@@ -1,0 +1,56 @@
+.button {
+    color: var(--crl-light);
+    text-decoration: none;
+    letter-spacing: 2px;
+    padding: .5em 1em;
+    background-color: transparent;
+    border: none;
+    border-radius: .3em;
+    cursor: pointer;
+}
+
+.button:global(.button--primary) {
+    background-color: var(--clr-theme);
+    border: 2px solid var(--clr-theme);
+}
+
+.button:global(.button--secondary) {
+    border: 2px solid var(--clr-theme);
+}
+
+.button:global(.button--functional) {
+    background-color: var(--clr-dark);
+    border-radius: 2em;
+    display: flex;
+    align-items: center;
+    font-size: .9rem;
+}
+
+.button:global(.button--functional)>img {
+    height: 30px;
+    margin-right: .5em;
+    display: inline-block;
+}
+
+.button:global(.button--functional):hover {
+    background-color: var(--clr-gray);
+}
+
+.button:global(.button--submit) {
+    width: 100%;
+    background-color: var(--clr-theme);
+}
+
+.button:global(.button--play) {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--clr-theme);
+    position: absolute;
+    bottom: 50px;
+    right: 50x;
+}
+
+.button:global(.button--submit):active {
+    transform: scale(.95);
+}

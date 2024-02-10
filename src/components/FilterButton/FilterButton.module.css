@@ -1,0 +1,20 @@
+.filterBtn {
+    width: fit-content;
+    color: var(--clr-light);
+    font-weight: 600;
+    border: 1px solid var(--clr-light);
+    border-radius: 1em;
+    text-transform: uppercase;
+    padding: .25em .5em;
+    background-color: var(--clr-dark);
+    cursor: pointer;
+}
+
+.filterBtn:hover {
+    background-color: var(--clr-theme);
+    transition: .2s ease-in;
+}
+
+.filterBtn:global(.selected) {
+    background-color: var(--clr-theme);
+}

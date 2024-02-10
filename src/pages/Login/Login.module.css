@@ -1,0 +1,42 @@
+.container {
+    width: 100%;
+    min-height: 100vh;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--clr-dark);
+    background-image: url('Images/loginsignupbg.jpg');
+    background-blend-mode: multiply;
+}
+
+
+.loginForm {
+    width: 100%;
+    max-width: 450px;
+    margin: 0 auto;
+    padding: 2em;
+    background-color: rgba(0, 0, 0, .4);
+}
+
+.loginForm input {
+    width: 100%;
+    background-color: var(--clr-dark);
+    margin-bottom: 2em;
+    display: block;
+    padding: .5em;
+    border-radius: .2em;
+    border: 0;
+    outline: 0;
+    color: var(--clr-light);
+}
+
+.loginForm input:focus {
+    border-bottom: .5em;
+    border-bottom: 2px solid var(--clr-theme);
+}
+
+.loginText {
+    text-align: center;
+}

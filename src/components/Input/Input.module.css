@@ -1,0 +1,19 @@
+.label {
+    color: var(--clr-gray);
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.input {
+    border: 0;
+    border: 2px solid transparent;
+    display: block;
+    margin: .6em 0;
+    width: 100%;
+    color: var(--clr-dark);
+    font-weight: 400;
+}
+
+.input:focus {
+    border: 2px solid var(--clr-theme);
+}

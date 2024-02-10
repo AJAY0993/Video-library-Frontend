@@ -1,0 +1,58 @@
+.container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 100px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--clr-dark);
+    background-image: url('Images/loginsignupbg.jpg');
+    background-blend-mode: multiply;
+}
+
+
+.signupForm {
+    width: 100%;
+    max-width: 450px;
+    margin: 0 auto;
+    padding: 2em;
+    background-color: rgba(0, 0, 0, .4);
+}
+
+.signupForm input {
+    width: 100%;
+    background-color: var(--clr-dark);
+    margin-bottom: 2em;
+    display: block;
+    padding: .5em;
+    border-radius: .2em;
+    border: 0;
+    outline: 0;
+    color: var(--clr-light);
+}
+
+.signupForm input:focus {
+    border-bottom: .5em;
+    border-bottom: 2px solid var(--clr-theme);
+}
+
+.signupText {
+    text-align: center;
+}
+
+.signupBtn {
+    background-color: var(--clr-theme);
+    border-radius: .5em;
+    color: var(--clr-light);
+    width: 100%;
+    padding: .5em;
+    border: 0;
+    outline: none;
+    cursor: pointer;
+    transition: all .05s ease-in-out;
+}
+
+.signupBtn:active {
+    scale: .95;
+}

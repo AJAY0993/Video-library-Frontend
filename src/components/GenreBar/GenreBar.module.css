@@ -1,0 +1,16 @@
+.filterWrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5em;
+    list-style: none;
+    overflow-x: scroll;
+}
+
+.filterWrapper::-webkit-scrollbar {
+    display: none;
+}
+
+.filterWrapper {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
