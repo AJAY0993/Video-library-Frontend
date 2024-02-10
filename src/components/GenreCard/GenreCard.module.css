@@ -23,38 +23,6 @@
     box-shadow: 5px 5px var(--clr-light);
 }
 
-:global(.action) {
-    background-image: url('Images/GenreCardImages/action.jpg');
-}
-
-:global(.animation) {
-    background-image: url('Images/GenreCardImages/animation.jpg');
-}
-
-:global(.comedy) {
-    background-image: url('Images/GenreCardImages/comedy.jpg');
-}
-
-:global(.drama) {
-    background-image: url('Images/GenreCardImages/drama.jpg');
-}
-
-:global(.fantasy) {
-    background-image: url('Images/GenreCardImages/fantasy.jpg');
-}
-
-:global(.horror) {
-    background-image: url('Images/GenreCardImages/horror.jpg');
-}
-
-:global(.romance) {
-    background-image: url('Images/GenreCardImages/romance.jpg');
-}
-
-:global(.science-fiction) {
-    background-image: url('Images/GenreCardImages/science-fiction.jpg');
-}
-
 .cardTitle {
     padding: .5em 1em;
     border: 1px solid var(--clr-light);

@@ -47,10 +47,18 @@
     border-radius: 50%;
     background-color: var(--clr-theme);
     position: absolute;
-    bottom: 50px;
-    right: 50x;
+    bottom: 1em;
+    right: 1em;
 }
 
 .button:global(.button--submit):active {
     transform: scale(.95);
+}
+
+@media (max-width:600px) {
+
+    .button:global(.button--functional)>img {
+        height: 20px;
+    }
+
 }

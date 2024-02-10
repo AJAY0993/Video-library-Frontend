@@ -18,8 +18,7 @@
 }
 
 .logo {
-    font-size: 2rem;
-    font-weight: 600;
+    max-width: 200px;
     color: var(--clr-light);
 }
 
@@ -46,5 +45,11 @@
 @media (width<600px) {
     .header nav {
         margin-left: 0;
+        height: 60px;
     }
+
+    .logo {
+        width: 100px;
+    }
+
 }

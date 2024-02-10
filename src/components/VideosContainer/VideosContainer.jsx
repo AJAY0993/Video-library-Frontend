@@ -1,7 +1,7 @@
 import VideoCard from "../VideoCard/VideoCard";
 import styles from "./VideosContainer.module.css";
-import { FadeLoader } from "react-spinners";
 import { useData } from "../../context/DataContext";
+import MyLoader from "../MyLoader/MyLoader";
 
 function VideosContainer({ type }) {
   const { state } = useData();
@@ -15,13 +15,7 @@ function VideosContainer({ type }) {
   return (
     <section className={styles.container}>
       {isLoading ? (
-        <FadeLoader
-          color={"red"}
-          loading={isLoading}
-          size={50}
-          aria-label="Loading Spinner"
-          data-testid="loader"
-        />
+        <MyLoader />
       ) : (
         vids.map((vod) => <VideoCard vod={vod} key={vod._id} />)
       )}

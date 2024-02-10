@@ -20,17 +20,23 @@ const initialState = {
 };
 
 async function getVideos({ state, action }, dispatch) {
-  const configuration = {
-    method: "GET",
-    url: `${BASE_URL}videos${
-      state.filter !== "all" ? "?category=" + state.filter : ""
-    }`,
-  };
-  const res = await axios(configuration);
-  const data = res.data;
-  const videos = data.data.videos;
-  dispatch({ type: "GET_VIDEOS", payload: videos });
-  console.log("done");
+  try {
+    setLoader({ state, action: { payload: true } }, dispatch);
+    const configuration = {
+      method: "GET",
+      url: `${BASE_URL}videos${
+        state.filter !== "all" ? "?category=" + state.filter : ""
+      }`,
+    };
+    const res = await axios(configuration);
+    const data = res.data;
+    const videos = data.data.videos;
+    dispatch({ type: "GET_VIDEOS", payload: videos });
+  } catch (err) {
+    console.log(err);
+  } finally {
+    setLoader({ state, action: { payload: false } }, dispatch);
+  }
 }
 
 async function getCategories({ state, action }, dispatch) {
@@ -115,7 +121,6 @@ async function removeHistory({ state, action }, dispatch) {
     data: { video: action.payload },
   };
   const res = await axios(configuration);
-  const history = res.data.history;
   myToast("success", "Video removed successfully");
   dispatch({ type: "CLEAR_HISTORY", payload: [] });
 }
@@ -234,11 +239,11 @@ const reducerFunc = {
 function reducer(state, action) {
   switch (action.type) {
     case "GET_VIDEOS":
-      return { ...state, videos: action.payload };
+      return { ...state, videos: action.payload, isLoading: false };
     case "SET_FILTER":
       return { ...state, filter: action.payload };
     case "GET_CATEGORIES":
-      return { ...state, genres: action.payload };
+      return { ...state, genres: action.payload, isLoading: false };
     case "SET_LOADER":
       return { ...state, isLoading: action.payload };
     case "GET_HISTORY":

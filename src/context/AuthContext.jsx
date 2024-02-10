@@ -109,7 +109,7 @@ function AuthProvider({ children }) {
       }
     };
     getUser();
-  }, [isAuthenticated]);
+  }, []);
 
   const value = {
     login,

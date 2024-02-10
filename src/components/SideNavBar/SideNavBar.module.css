@@ -59,7 +59,8 @@
 
     .navListIcon {
         width: 100%;
-        max-width: 45px;
+        width: 40px;
+        height: 40px;
         margin: 0;
     }
 

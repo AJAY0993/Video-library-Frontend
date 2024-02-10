@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styles from "./Header.module.css";
 import { useAuth } from "../../context/AuthContext";
 import Button from "../Button/Button";
@@ -10,7 +10,13 @@ function Header() {
     <header className={styles.header}>
       <div className={`wrapper-container ${styles.header}`}>
         <nav>
-          <div className={styles.logo}>JETFLIX</div>
+          <div className={styles.logo}>
+            <img
+              src="https://i.ibb.co/4Ywt8tD/vidvault-high-resolution-logo-transparent.png"
+              alt="vidvault-high-resolution-logo-transparent"
+              border="0"
+            ></img>
+          </div>
           <ul className={styles.linkList}>
             {!isAuthenticated ? (
               <>

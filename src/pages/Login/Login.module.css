@@ -1,10 +1,10 @@
 .container {
     width: 100%;
-    min-height: 100vh;
+    min-height: calc(100vh - 100px);
     margin: 0 auto;
+    margin-top: 100px;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
     background: var(--clr-dark);
     background-image: url('Images/loginsignupbg.jpg');
@@ -14,7 +14,7 @@
 
 .loginForm {
     width: 100%;
-    max-width: 450px;
+    max-width: 300px;
     margin: 0 auto;
     padding: 2em;
     background-color: rgba(0, 0, 0, .4);
@@ -25,7 +25,7 @@
     background-color: var(--clr-dark);
     margin-bottom: 2em;
     display: block;
-    padding: .5em;
+    padding: .25em .5em;
     border-radius: .2em;
     border: 0;
     outline: 0;
