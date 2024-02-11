@@ -35,10 +35,11 @@ function Modal({ type }) {
       };
       const res = await axios(configuration);
       const data = res.data;
-      myToast("success", data.messsage);
-      console.log("success");
+      myToast("success", "Added video to playlist successfully");
       closeModal();
     } catch (err) {
+      myToast("error", err.response.data.message);
+      closeModal();
       console.log(err);
     }
   };

@@ -10,7 +10,7 @@ function Playlist() {
     <Layout>
       <section className="page">
         {!isAuthenticated && <NotLoggedIn />}
-        <Outlet />
+        {isAuthenticated && <Outlet />}
       </section>
     </Layout>
   );

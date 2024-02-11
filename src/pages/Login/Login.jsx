@@ -32,6 +32,15 @@ function Login() {
         <p className={styles.loginText}>
           New to Jetflix? <Link to="/signup">Sign up</Link> now.
         </p>
+        <p
+          className={styles.loginText}
+          onClick={() => {
+            emailRef.current.value = "testuser@gmail.com";
+            passwordRef.current.value = "testpassword";
+          }}
+        >
+          Countinue as guest?
+        </p>
       </div>
     </Layout>
   );

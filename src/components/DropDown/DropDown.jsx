@@ -5,12 +5,26 @@ import { copyToClipboard } from "./../../utils/copyToClipboard";
 function DropDown({ vidId }) {
   const { state, reducerFunc, dispatch } = useData();
   const location = window.location.pathname;
-
-  if (location.includes("history")) {
+  const remove = () => {
+    if (location.includes("history")) {
+      reducerFunc.removeFromHistory(
+        { state, action: { payload: vidId } },
+        dispatch
+      );
+    }
+    if (location.includes("playlist")) {
+      reducerFunc.removeFromPlaylist(
+        { state, action: { payload: vidId } },
+        dispatch
+      );
+    }
+  };
+  const share = () => copyToClipboard(location);
+  if (location.includes("history") || location.includes("playlist")) {
     return (
       <div className={styles.dropDown}>
         <ul>
-          <Li onClick={() => copyToClipboard("Copied")}>
+          <Li onClick={share}>
             <img
               src="https://i.ibb.co/N6W8qVD/share.png"
               alt="share"
@@ -18,7 +32,7 @@ function DropDown({ vidId }) {
             ></img>
             <span>Share</span>
           </Li>
-          <Li>
+          <Li onClick={remove}>
             <img
               src="https://i.ibb.co/JqXFGZ5/delete.png"
               alt="delete"
@@ -33,7 +47,7 @@ function DropDown({ vidId }) {
   return (
     <div className={styles.dropDown}>
       <ul>
-        <Li onClick={() => copyToClipboard("Copied")}>
+        <Li onClick={share}>
           <img
             src="https://i.ibb.co/N6W8qVD/share.png"
             alt="share"
@@ -41,9 +55,7 @@ function DropDown({ vidId }) {
           ></img>
           <span>Share</span>
         </Li>
-        <Li
-          onClick={() => reducerFunc.openModal({ state, action: {} }, dispatch)}
-        >
+        <Li onClick={() => alert("Added to watch later")}>
           <img
             src="https://i.ibb.co/CwCpHVw/clock.png"
             alt="clock"

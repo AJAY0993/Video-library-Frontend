@@ -4,7 +4,6 @@ import { useNavigate } from "react-router";
 import timeAgo from "../../utils/timeAgo";
 import { useState } from "react";
 import DropDown from "../DropDown/DropDown";
-import { useData } from "../../context/DataContext";
 
 function VideoCard({ vod }) {
   const [dropDown, setDropDown] = useState(false);

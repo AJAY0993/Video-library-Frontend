@@ -14,11 +14,12 @@ function AuthProvider({ children }) {
   const [isLoading, setIsLoading] = useState(null);
 
   //signup
-  async function signup(email, password) {
+  async function signup(username, email, password) {
     const configuration = {
       method: "POST",
       url: `${BASE_URL}users/signup`,
       data: {
+        username: username,
         email: email,
         password: password,
       },

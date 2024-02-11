@@ -3,11 +3,10 @@ import Button from "../Button/Button";
 import styles from "./PlaylistCard.module.css";
 import { useData } from "../../context/DataContext";
 function PlaylistCard({ playlist }) {
-  const { reducerFunc, dispatch } = useData();
+  const { state, reducerFunc, dispatch } = useData();
   const navigate = useNavigate();
 
   const view = () => {
-    reducerFunc.getPlaylistVideos(null, dispatch);
     navigate(`${playlist._id}`);
   };
 
