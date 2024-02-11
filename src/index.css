@@ -155,7 +155,7 @@ input:focus {
 
 @media (max-width:600px) {
   .page {
-    margin-top: -100px;
+    margin-top: 60px;
   }
 
   html {
