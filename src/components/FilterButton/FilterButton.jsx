@@ -5,7 +5,7 @@ function FilterButton({ text }) {
   const { state, reducerFunc, dispatch } = useData();
   const { setFilter } = reducerFunc;
   function onClick() {
-    setFilter({ state, action: { payload: text.toLowerCase() } }, dispatch);
+    setFilter({ state, action: { payload: text } }, dispatch);
   }
   return (
     <li

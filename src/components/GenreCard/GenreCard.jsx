@@ -8,15 +8,11 @@ function GenreCard({ genre }) {
   const navigate = useNavigate();
   function onClick() {
     navigate("/explore");
-    setFilter(
-      { state, action: { payload: genre.name.toLowerCase() } },
-      dispatch
-    );
+    setFilter({ state, action: { payload: genre.name } }, dispatch);
   }
-  console.log(genre);
   return (
     <article
-      className={styles.card + " " + genre.name.toLowerCase()}
+      className={styles.card}
       onClick={onClick}
       style={{ backgroundImage: `url(https://i.ibb.co/${genre.image})` }}
     >

@@ -17,6 +17,7 @@ const initialState = {
   genres: [],
   isLoading: false,
   showModal: false,
+  selectedVid: null,
 };
 
 async function getVideos({ state, action }, dispatch) {
@@ -125,11 +126,15 @@ async function removeHistory({ state, action }, dispatch) {
   dispatch({ type: "CLEAR_HISTORY", payload: [] });
 }
 
-function openModal(obj, dispatch) {
-  dispatch({ type: "OPEN_MODAL" });
+function openModal({ state, action }, dispatch) {
+  dispatch({ type: "OPEN_MODAL", payload: action.payload });
 }
-function closeModal(obj, dispatch) {
+function closeModal(_, dispatch) {
   dispatch({ type: "CLOSE_MODAL" });
+}
+
+function setSelectedVid({ state, action: { payload: id } }, dispatch) {
+  dispatch({ type: "VIDEO_SELECTED", payload: id });
 }
 
 async function getPlaylists(_, dispatch) {
@@ -257,7 +262,7 @@ function reducer(state, action) {
     case "GET_VIDEOS":
       return { ...state, videos: action.payload, isLoading: false };
     case "SET_FILTER":
-      return { ...state, filter: action.payload };
+      return { ...state, filter: action.payload.toLowerCase() };
     case "GET_CATEGORIES":
       return { ...state, genres: action.payload, isLoading: false };
     case "SET_LOADER":
@@ -269,9 +274,11 @@ function reducer(state, action) {
     case "CLEAR_HISTORY":
       return { ...state, history: action.payload };
     case "OPEN_MODAL":
-      return { ...state, showModal: true };
+      return { ...state, showModal: true, selectedVid: action.payload };
     case "CLOSE_MODAL":
       return { ...state, showModal: false };
+    case "VIDEO_SELECTED":
+      return { ...state, selectedVid: action.payload };
     case "GET_PLAYLISTS":
       return { ...state, playlists: action.payload };
     case "GET_PLAYLIST_VIDEOS":

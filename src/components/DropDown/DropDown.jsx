@@ -2,7 +2,7 @@ import { useData } from "../../context/DataContext";
 import styles from "./DropDown.module.css";
 import { copyToClipboard } from "./../../utils/copyToClipboard";
 
-function DropDown() {
+function DropDown({ vidId }) {
   const { state, reducerFunc, dispatch } = useData();
   const location = window.location.pathname;
 
@@ -18,7 +18,14 @@ function DropDown() {
             ></img>
             <span>Share</span>
           </Li>
-          <li>Remove</li>
+          <Li>
+            <img
+              src="https://i.ibb.co/JqXFGZ5/delete.png"
+              alt="delete"
+              border="0"
+            ></img>
+            Remove
+          </Li>
         </ul>
       </div>
     );
@@ -45,7 +52,12 @@ function DropDown() {
           <span>Add to watch later</span>
         </Li>
         <Li
-          onClick={() => reducerFunc.openModal(null, dispatch)}
+          onClick={() =>
+            reducerFunc.openModal(
+              { state, action: { payload: vidId } },
+              dispatch
+            )
+          }
           className={styles.dropDownItem}
         >
           <img

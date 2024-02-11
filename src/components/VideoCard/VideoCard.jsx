@@ -40,7 +40,7 @@ function VideoCard({ vod }) {
           ></img>
         )}
       </button>
-      {dropDown && <DropDown />}
+      {dropDown && <DropDown vidId={vod._id} />}
     </article>
   );
 }

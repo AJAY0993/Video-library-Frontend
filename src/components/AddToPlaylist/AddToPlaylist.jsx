@@ -1,9 +1,9 @@
-import { useEffect } from "react";
 import styles from "./AddToPlaylist.module.css";
-import { useAuth } from "../../context/AuthContext";
+import { useData } from "../../context/DataContext";
 
 function AddToPlaylist() {
-  const { user } = useAuth();
+  const { state } = useData();
+  const { playlists } = state;
   return (
     <div className={styles.container}>
       <button className={styles.closeBtn}>
