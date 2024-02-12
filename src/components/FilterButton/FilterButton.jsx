@@ -8,13 +8,16 @@ function FilterButton({ text }) {
     setFilter({ state, action: { payload: text } }, dispatch);
   }
   return (
-    <li
-      className={`${styles.filterBtn} ${
-        text.toLowerCase() === state.filter ? "selected" : ""
-      }`}
-      onClick={onClick}
-    >
-      {text}
+    <li>
+      <button
+        className={`${styles.filterBtn} ${
+          text.toLowerCase() === state.filter ? "selected" : ""
+        }`}
+        onClick={onClick}
+        disabled={state.isLoading}
+      >
+        {text}
+      </button>
     </li>
   );
 }

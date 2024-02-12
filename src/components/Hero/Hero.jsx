@@ -1,6 +1,8 @@
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import styles from "./Hero.module.css";
+import vids from "../../utils/carouselVids";
+import { Link } from "react-router-dom";
 
 function Hero() {
   const responsive = {
@@ -24,82 +26,35 @@ function Hero() {
   return (
     <div className={styles.hero}>
       <Carousel responsive={responsive}>
-        <article
-          className={styles.carouselCard}
-          style={{
-            backgroundImage:
-              "url(https://i.ibb.co/pfKnyN4/john-wick-poster.jpg)",
-          }}
-        >
-          <div className={styles.carouselCardContent}>
-            <img
-              src="https://i.ibb.co/vXkL5pK/John-Wick-3-title-preview.png"
-              alt=""
-              className={styles.titleImg}
-            />
-            <span className={styles.tag}>Action</span>
-            <p className={styles.overview}>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quas
-              aspernatur, fugiat, commodi maxime, distinctio saepe illo
-              consectetur.
-            </p>
-            <button className={styles.btn}>Watch</button>
-            <button className={styles.btn} style={{ padding: " .5em 1em" }}>
-              +
-            </button>
-          </div>
-        </article>
-
-        <article
-          className={styles.carouselCard}
-          style={{
-            backgroundImage:
-              "url(https://i.ibb.co/M8100rZ/avengers-endgame-social.jpg)",
-          }}
-        >
-          <div className={styles.carouselCardContent}>
-            <img
-              src="https://i.ibb.co/2s5C8jq/Avengers-endgame-logo.png"
-              alt=""
-              className={styles.titleImg}
-            />
-            <span className={styles.tag}>Action</span>
-            <p className={styles.overview}>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quas
-              aspernatur, fugiat, commodi maxime, distinctio saepe illo
-              consectetur.
-            </p>
-            <button className={styles.btn}>Watch</button>
-            <button className={styles.btn} style={{ padding: " .5em 1em" }}>
-              +
-            </button>
-          </div>
-        </article>
-
-        <article
-          className={styles.carouselCard}
-          style={{
-            backgroundImage: "url(https://i.ibb.co/319Bvxg/Iron-man-3.jpg)",
-          }}
-        >
-          <div className={styles.carouselCardContent}>
-            <img
-              src="https://i.ibb.co/YbDJKGC/iron-man-3-title-preview.png"
-              alt="iron-man-3-title"
-              className={styles.titleImg}
-            ></img>
-            <span className={styles.tag}>Action</span>
-            <p className={styles.overview}>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quas
-              aspernatur, fugiat, commodi maxime, distinctio saepe illo
-              consectetur.
-            </p>
-            <button className={styles.btn}>Watch</button>
-            <button className={styles.btn} style={{ padding: " .5em 1em" }}>
-              +
-            </button>
-          </div>
-        </article>
+        {vids.map((video, i) => {
+          return (
+            <article
+              className={styles.carouselCard}
+              style={{
+                backgroundImage: `url(https://i.ibb.co/${video.cover})`,
+              }}
+              key={i + 1}
+            >
+              <div className={styles.carouselCardContent}>
+                <img
+                  src={`https://i.ibb.co/${video.titleImg}`}
+                  alt=""
+                  className={styles.titleImg}
+                />
+                <span className={styles.tag}>{video.category}</span>
+                <p className={styles.overview}>
+                  {video.description.slice(0, 120) + "..."}
+                </p>
+                <Link to={`/explore/${video._id}`} className={styles.btn}>
+                  Watch
+                </Link>
+                <button className={styles.btn} style={{ padding: " .5em 1em" }}>
+                  +
+                </button>
+              </div>
+            </article>
+          );
+        })}
       </Carousel>
     </div>
   );

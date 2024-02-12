@@ -54,6 +54,7 @@ function AuthProvider({ children }) {
     };
     try {
       setIsLoading(true);
+      myToast("info", "Please wait a moment");
       const res = await axios(configuration);
       console.log(res);
       if (res.data.status === "success") {

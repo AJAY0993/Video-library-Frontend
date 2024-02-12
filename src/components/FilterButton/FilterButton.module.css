@@ -10,6 +10,10 @@
     cursor: pointer;
 }
 
+.filterBtn:disabled {
+    cursor: not-allowed;
+}
+
 .filterBtn:hover {
     background-color: var(--clr-theme);
     transition: .2s ease-in;

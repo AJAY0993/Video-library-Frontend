@@ -294,10 +294,10 @@ function reducer(state, action) {
 function DataProvider({ children }) {
   const { isAuthenticated } = useAuth();
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { selectedPlaylist } = state;
+  const { filter } = state;
   useEffect(() => {
     getVideos({ state, payload: state.filter }, dispatch);
-  }, [state.filter]);
+  }, [filter]);
 
   useEffect(() => {
     getCategories({ state, action: null }, dispatch);

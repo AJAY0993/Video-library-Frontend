@@ -5,7 +5,6 @@ import { useData } from "../../context/DataContext";
 function GenreBar() {
   const { state } = useData();
   const { isLoading, genres } = state;
-  if (isLoading) return null;
   return (
     <ul className={styles.filterWrapper}>
       <FilterButton key={"All"} text={"All"} />

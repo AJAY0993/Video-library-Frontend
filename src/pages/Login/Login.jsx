@@ -7,7 +7,7 @@ import Button from "../../components/Button/Button";
 
 function Login() {
   const navigate = useNavigate();
-  const { isAuthenticated, login } = useAuth();
+  const { isAuthenticated, login, isLoading } = useAuth();
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
 
@@ -25,8 +25,12 @@ function Login() {
           <h2>Login</h2>
           <input ref={emailRef} placeholder={"email"} />
           <input ref={passwordRef} placeholder={"password"} />
-          <Button className="button--submit" onClick={handleSubmit}>
-            Login
+          <Button
+            className="button--submit"
+            onClick={handleSubmit}
+            disabled={isLoading}
+          >
+            {isLoading ? "Please wait" : "Login"}
           </Button>
         </form>
         <p className={styles.loginText}>
