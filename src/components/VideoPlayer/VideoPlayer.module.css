@@ -36,12 +36,35 @@
     width: 100%;
     background-color: var(--clr-dark);
     padding: 1em;
+    margin: .5em 0;
     border-radius: .5em;
 }
 
 
 .descriptionBox>p {
     max-width: 66ch;
+}
+
+.comment__heading {
+    font-size: var(--fs-body)
+}
+
+
+.comment {
+    border-bottom: 1px solid var(--clr-gray);
+    padding: .5em 0;
+}
+
+.comment__img {
+    max-height: 30px;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.comment__text {
+    font-size: .9rem;
+    margin-left: 45px;
 }
 
 .toggler {
@@ -51,6 +74,8 @@
     border: none;
     cursor: pointer;
 }
+
+
 
 .relatedVideosContainer {
     position: relative;

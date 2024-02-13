@@ -14,6 +14,7 @@ function Videos() {
     const res = await axios(`${BASE_URL}videos?search=${searchQuery}`);
     console.log(res);
     const data = res.data;
+    setSearchQuery("");
     dispatch({ type: "GET_VIDEOS", payload: data.data.videos });
   };
   <form className="d-flex j-center g-1" onSubmit={search}>
@@ -23,7 +24,7 @@ function Videos() {
     ></input>{" "}
     &nbsp;
     <Button className="button--circle" onClick={search}>
-      <img src="../public/Images/icons/search.png" alt="" />
+      <img src="Images/icons/search.png" alt="" />
     </Button>
   </form>;
   return (

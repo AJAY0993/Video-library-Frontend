@@ -1,12 +1,11 @@
-const throttler = fn => {
+const throttler = (fn, delay) => {
     let timerId;
-    return function () {
+    return () => {
         clearTimeout(timerId)
-        timerId = setTimeout(() => {
-            fn()
-        }, 500);
+        timerId = setTimeout(fn, delay);
 
     }
+
 }
 
 export default throttler

@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import styles from "./VideoPlayer.module.css";
 import VideoCard from "../VideoCard/VideoCard";
 import timeAgo from "../../utils/timeAgo";
@@ -11,6 +11,8 @@ import Button from "../Button/Button";
 import { useData } from "../../context/DataContext";
 import { useAuth } from "../../context/AuthContext";
 import MyLoader from "./../MyLoader/MyLoader";
+import throttler from "./../../utils/throttler";
+import initialComments from "../../utils/comments";
 
 function VideoPlayer() {
   const { state, reducerFunc, dispatch } = useData();
@@ -19,7 +21,26 @@ function VideoPlayer() {
   const [isLoading, setIsLoading] = useState(true);
   const [vod, setVod] = useState(null);
   const [show, setShow] = useState(false);
+  const [likes, setLikes] = useState(0);
+  const [comment, setComment] = useState("");
+  const [comments, setComments] = useState(initialComments);
   const { id } = useParams();
+
+  const likeFunc = throttler(async () => {
+    if (!isAuthenticated) return myToast("error", "Please log in!");
+    const token = localStorage.getItem("token");
+    const configurations = {
+      method: "PATCH",
+      url: `${BASE_URL}videos/${id}/like`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const res = await axios(configurations);
+    const data = res.data;
+    setLikes((s) => data.data.likes);
+    myToast("success", data.message);
+  }, 500);
 
   useEffect(() => {
     const incrementViews = async () => {
@@ -40,7 +61,7 @@ function VideoPlayer() {
         const data = await res.json();
         setVod(data.data.video);
         setCurrentCategory(data.data.video.category);
-        console.log(vod);
+        setLikes((s) => data.data.video.likes);
       } catch (error) {
         console.log(error);
       } finally {
@@ -76,9 +97,9 @@ function VideoPlayer() {
         <h3>{vod.name}</h3>
         <ul className={styles.funcWrapper}>
           <li>
-            <Button className="button--functional">
+            <Button className="button--functional" onClick={likeFunc}>
               <img src="../Images/icons/like.png" alt="like"></img>
-              <span> {Math.floor(vod.likes)}</span>
+              <span> {Math.floor(likes)}</span>
             </Button>
           </li>
           <li>
@@ -107,6 +128,50 @@ function VideoPlayer() {
           <button className={styles.toggler} onClick={() => setShow((s) => !s)}>
             {show ? "show-less" : "description"}
           </button>
+        </div>
+        <div className="my-1 d-flex">
+          {!isAuthenticated ? (
+            <p>
+              Please <Link to="/login">Login</Link> to add comments{" "}
+            </p>
+          ) : (
+            <>
+              <input
+                type="text"
+                className="input--secondary w-100 my-1"
+                placeholder="Type here to add comment"
+                name="comment"
+                value={comment}
+                onChange={(e) => setComment((s) => e.target.value)}
+              />
+
+              <Button
+                className="button--secondary mx-1"
+                onClick={() => setComment((s) => "")}
+              >
+                Cancel
+              </Button>
+              <Button
+                className="button--primary mx-1"
+                disabled={comment === ""}
+                onClick={() => {
+                  setComments((c) => [
+                    ...comments,
+                    { senderName: "testuser", text: comment },
+                  ]);
+                  setComment((s) => "");
+                }}
+              >
+                Send
+              </Button>
+            </>
+          )}
+        </div>
+
+        <div className={styles.commentBox}>
+          {comments.map((comment, i) => (
+            <Comment comment={comment} key={i + 1} />
+          ))}
         </div>
       </div>
       <div className={styles.relatedVideosContainer}>
@@ -142,6 +207,25 @@ function Recommendations({ category }) {
       {recommendedVideos &&
         recommendedVideos.map((vod) => <VideoCard vod={vod} key={vod._id} />)}
     </>
+  );
+}
+
+function Comment({ comment }) {
+  return (
+    <div className={styles.comment}>
+      <figure className="d-flex a-center">
+        <img
+          className={styles.comment__img}
+          src="https://i.ibb.co/mBXRT6g/profile-user.png"
+          alt="profile-user"
+          border="0"
+        ></img>
+        <figcaption className={styles.comment__heading}>
+          {comment.senderName}
+        </figcaption>
+      </figure>
+      <p className={styles.comment__text}>{comment.text}</p>
+    </div>
   );
 }
 export default VideoPlayer;
