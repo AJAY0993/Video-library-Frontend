@@ -3,7 +3,7 @@ import "./App.css";
 import Home from "./pages/Home";
 import Explore from "./pages/Explore/Explore";
 import Playlists from "./pages/Playlists/Playlists";
-import Library from "./pages/Library";
+import Library from "./pages/Liked";
 import WatchLater from "./pages/WatchLater";
 import History from "./pages/History/History";
 import VideoPlayer from "./components/VideoPlayer/VideoPlayer";

@@ -6,6 +6,8 @@ export default function reducer(state, action) {
             return { ...state, filter: action.payload.toLowerCase() };
         case "GET_CATEGORIES":
             return { ...state, genres: action.payload, isLoading: false };
+        case "GET_LIKED":
+            return { ...state, liked: action.payload, isLoading: false }
         case "SET_LOADER":
             return { ...state, isLoading: action.payload };
         case "GET_HISTORY":

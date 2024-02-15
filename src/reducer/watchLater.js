@@ -35,7 +35,8 @@ export async function addVideoToWatchLater({ state, action }, dispatch) {
         }
         const res = await axios(configuration)
         const data = res.data
-        const watchLater = [...state.watchLater, data.data.watchLater]
+        const watchLater = data.data.watchLater
+        myToast("success", "Video added successfully")
         dispatch({ type: "ADD_VIDEO_TO_WATCHLATER", payload: watchLater })
         dispatch({ type: "SET_LOADER", payload: false });
     }
@@ -60,7 +61,8 @@ export async function removeVideoFromWatchLater({ state, action }, dispatch) {
         }
         const res = await axios(configuration)
         const data = res.data
-        const watchLater = [...state.watchLater, data.data.watchLater]
+        const watchLater = data.data.watchLater
+        myToast("success", "Video removed successfully")
         dispatch({ type: "REMOVE_VIDEO_FROM_WATCHLATER", payload: watchLater })
         dispatch({ type: "SET_LOADER", payload: false });
     }

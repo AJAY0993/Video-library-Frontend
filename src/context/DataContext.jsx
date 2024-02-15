@@ -61,6 +61,24 @@ async function getCategories({ state, action }, dispatch) {
   }
 }
 
+async function getLiked(_, dispatch) {
+  dispatch({ type: "SET_LOADER", payload: true });
+  const token = localStorage.getItem("token");
+  const configuration = {
+    method: "GET",
+    url: `${BASE_URL}users/my/liked`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  try {
+    const res = await axios(configuration);
+    dispatch({ type: "GET_LIKED", payload: res.data.data.liked });
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 function setFilter({ state, action }, dispatch) {
   dispatch({ type: "SET_FILTER", payload: action.payload });
 }
@@ -104,6 +122,7 @@ const reducerFunc = {
   setFilter,
   setLoader,
   getHistory,
+  getLiked,
   addVideoToHistory,
   removeVideoFromHistory,
   clearHistory,
@@ -136,6 +155,10 @@ function DataProvider({ children }) {
 
   useEffect(() => {
     isAuthenticated && getPlaylists(null, dispatch);
+  }, [isAuthenticated]);
+
+  useEffect(() => {
+    isAuthenticated && getLiked(null, dispatch);
   }, [isAuthenticated]);
 
   useEffect(() => {
