@@ -3,7 +3,10 @@ import Button from "../Button/Button";
 
 function NotLoggedIn() {
   const style = {
-    textAlign: "center",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
   };
 
   const navigate = useNavigate();
