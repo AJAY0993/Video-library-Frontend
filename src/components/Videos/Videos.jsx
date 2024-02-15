@@ -22,7 +22,7 @@ function Videos() {
       <VideoSearchForm
         value={searchQuery}
         onSubmit={search}
-        onChange={searchQuery}
+        onChange={setSearchQuery}
       />
       <GenreBar />
       <CardsContainer videos={videos} />
@@ -38,7 +38,7 @@ function VideoSearchForm({ value, onSubmit, onChange }) {
         value={value}
         placeholder="Type here to search"
         onChange={(e) => onChange((s) => e.target.value)}
-      ></input>{" "}
+      ></input>
       &nbsp;
       <Button className="button--circle" onClick={onSubmit}>
         <img src="Images/icons/search.png" alt="" />
