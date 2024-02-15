@@ -12,7 +12,7 @@ function SideNavBar() {
         <img src="https://i.ibb.co/5Bw21F4/explore.png" alt="explore"></img>
       </NavLink>
 
-      <NavLink className={styles.navListIcon} to="/playlist">
+      <NavLink className={styles.navListIcon} to="/playlists">
         <img
           src="https://i.ibb.co/xD1gCR1/playlist.png"
           alt="playlist"

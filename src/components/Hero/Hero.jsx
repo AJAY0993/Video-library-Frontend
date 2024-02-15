@@ -2,9 +2,10 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import styles from "./Hero.module.css";
 import vids from "../../utils/carouselVids";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 function Hero() {
+  const navigate = useNavigate();
   const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
@@ -45,9 +46,12 @@ function Hero() {
                 <p className={styles.overview}>
                   {video.description.slice(0, 120) + "..."}
                 </p>
-                <Link to={`/explore/${video._id}`} className={styles.btn}>
+                <button
+                  className={styles.btn}
+                  onClick={() => navigate(`/explore/${video._id}`)}
+                >
                   Watch
-                </Link>
+                </button>
                 <button className={styles.btn} style={{ padding: " .5em 1em" }}>
                   +
                 </button>

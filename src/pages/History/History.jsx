@@ -2,23 +2,22 @@ import { useNavigate } from "react-router";
 import Button from "../../components/Button/Button";
 import Layout from "../../components/Layout/Layout";
 import NotLoggedIn from "../../components/NotLoggedIn/NotLoggedIn";
-import VideosContainer from "../../components/VideosContainer/VideosContainer";
+import VideosContainer from "../../components/CardsContainer/CardsContainer";
 import { useAuth } from "../../context/AuthContext";
 import { useData } from "../../context/DataContext";
 import NothingToSee from "../../components/NothingToSee/NothingToSee";
 
 function History() {
   const { isAuthenticated } = useAuth();
-  const { state, reducerFunc, dispatch } = useData();
-  const { isLoading } = state;
+  const { state, reducerFunc, history, dispatch } = useData();
 
   return (
     <Layout>
       <section className="page">
         {!isAuthenticated && <NotLoggedIn />}
 
-        {isAuthenticated && state.history.length < 1 && <NothingToSee />}
-        {isAuthenticated && state.history.length > 0 && !state.isLoading && (
+        {isAuthenticated && history.length < 1 && <NothingToSee />}
+        {isAuthenticated && history.length > 0 && !state.isLoading && (
           <>
             {
               <Button
@@ -30,7 +29,7 @@ function History() {
                 🗑️Clear history
               </Button>
             }
-            <VideosContainer type="history"></VideosContainer>
+            <VideosContainer videos={history} />
           </>
         )}
       </section>

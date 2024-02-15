@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "./App.css";
 import Home from "./pages/Home";
 import Explore from "./pages/Explore/Explore";
-import Playlist from "./pages/Playlist";
+import Playlists from "./pages/Playlists/Playlists";
 import Library from "./pages/Library";
 import WatchLater from "./pages/WatchLater";
 import History from "./pages/History/History";
@@ -14,9 +14,7 @@ import Login from "./pages/Login/Login";
 import Signup from "./pages/Signup/Signup";
 import { ToastContainer } from "react-toastify";
 import { DataProvider } from "./context/DataContext";
-import PlaylistContainer from "./components/PlaylistContainer/PlaylistContainer";
-import VideosContainer from "./components/VideosContainer/VideosContainer";
-import Modal from "./components/Modal/Modal";
+import PageForEachPlaylist from "./pages/PageForEachPlaylist/PageForEachPlaylist";
 function App() {
   return (
     <BrowserRouter>
@@ -25,14 +23,13 @@ function App() {
           <Routes>
             <Route index element={<Home />} />
             <Route path="/" element={<Home />} />
-            {/* <Route index element={<Modal />} /> */}
             <Route path="/explore" element={<Explore />}>
               <Route index element={<Videos />} />
               <Route path=":id" element={<VideoPlayer />} />
             </Route>
-            <Route path="/playlist" element={<Playlist />}>
-              <Route index element={<PlaylistContainer />} />
-              <Route path=":id" element={<VideosContainer type="playlist" />} />
+            <Route path="/playlists">
+              <Route index element={<Playlists />} />
+              <Route path=":id" element={<PageForEachPlaylist />} />
             </Route>
             <Route path="/liked" element={<Library />} />
             <Route path="/watchLater" element={<WatchLater />} />

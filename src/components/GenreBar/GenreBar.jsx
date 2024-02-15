@@ -6,7 +6,7 @@ function GenreBar() {
   const { state } = useData();
   const { isLoading, genres } = state;
   return (
-    <ul className={styles.filterWrapper}>
+    <ul className={styles.filterWrapper + " my-1"}>
       <FilterButton key={"All"} text={"All"} />
       {genres.map((genre) => (
         <FilterButton key={genre.name} text={genre.name} />

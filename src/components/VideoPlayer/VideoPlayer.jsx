@@ -73,7 +73,10 @@ function VideoPlayer() {
 
   useEffect(() => {
     isAuthenticated &&
-      reducerFunc.updateHistory({ state, action: { payload: id } }, dispatch);
+      reducerFunc.addVideoToHistory(
+        { state, action: { payload: id } },
+        dispatch
+      );
   }, [id]);
 
   const shareVideo = () => {
@@ -81,8 +84,18 @@ function VideoPlayer() {
     myToast("success", "Link copied successfully");
   };
 
+  const addVideo = () => {
+    reducerFunc.setModalType(
+      {
+        state,
+        action: { payload: "addToPlaylist" },
+      },
+      dispatch
+    );
+    reducerFunc.setSelectedVideo({ state, action: { payload: id } }, dispatch);
+    reducerFunc.openModal(null, dispatch);
+  };
   if (isLoading) return <MyLoader />;
-  if (!vod) return <></>;
   return (
     <div className={styles.container}>
       <div className={styles.videoPlayer}>
@@ -109,7 +122,7 @@ function VideoPlayer() {
             </Button>
           </li>
           <li>
-            <Button className="button--functional">
+            <Button className="button--functional" onClick={addVideo}>
               <img src="../Images/icons/add.png" alt="add"></img>
               <span> Add to</span>
             </Button>
@@ -129,7 +142,7 @@ function VideoPlayer() {
             {show ? "show-less" : "description"}
           </button>
         </div>
-        <div className="my-1 d-flex">
+        <div className="my-1 d-flex g-1">
           {!isAuthenticated ? (
             <p>
               Please <Link to="/login">Login</Link> to add comments{" "}
@@ -138,7 +151,7 @@ function VideoPlayer() {
             <>
               <input
                 type="text"
-                className="input--secondary w-100 my-1"
+                className="input--secondary fg-1  my-1"
                 placeholder="Type here to add comment"
                 name="comment"
                 value={comment}
@@ -152,7 +165,7 @@ function VideoPlayer() {
                 Cancel
               </Button>
               <Button
-                className="button--primary mx-1"
+                className="button--primary"
                 disabled={comment === ""}
                 onClick={() => {
                   setComments((c) => [
@@ -205,7 +218,9 @@ function Recommendations({ category }) {
     <>
       <h3>Similar videos</h3>
       {recommendedVideos &&
-        recommendedVideos.map((vod) => <VideoCard vod={vod} key={vod._id} />)}
+        recommendedVideos.map((video, i) => (
+          <VideoCard video={video} key={i + 1} />
+        ))}
     </>
   );
 }

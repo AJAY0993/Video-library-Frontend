@@ -88,7 +88,7 @@ function AuthProvider({ children }) {
       try {
         const configuration = {
           method: "GET",
-          url: `${BASE_URL}users/profile`,
+          url: `${BASE_URL}users/my/profile`,
           headers: {
             Authorization: `Bearer ${token}`,
           },

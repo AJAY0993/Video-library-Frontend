@@ -2,12 +2,19 @@ import { useNavigate } from "react-router";
 import Button from "../Button/Button";
 import styles from "./PlaylistCard.module.css";
 import { useData } from "../../context/DataContext";
-function PlaylistCard({ playlist }) {
-  const { state, reducerFunc, dispatch } = useData();
-  const navigate = useNavigate();
 
+function PlaylistCard({ playlist }) {
+  const navigate = useNavigate();
+  const { state, reducerFunc, dispatch } = useData();
   const view = () => {
     navigate(`${playlist._id}`);
+  };
+
+  const deletePlaylist = () => {
+    reducerFunc.deletePlaylist(
+      { state, action: { payload: playlist._id } },
+      dispatch
+    );
   };
 
   return (
@@ -18,9 +25,16 @@ function PlaylistCard({ playlist }) {
         border="0"
         onClick={view}
       ></img>
-      <div className={styles.card__content}>
+      <div className={styles.card__content + " d-flex j-center"}>
         <h4 className={styles.card__title}>{playlist.name}</h4>
-        <Button className={"button--play"} onClick={view}>
+        <Button className={"button--circle mx-1"} onClick={deletePlaylist}>
+          <img
+            src="https://i.ibb.co/JqXFGZ5/delete.png"
+            alt="delete"
+            border="0"
+          ></img>
+        </Button>
+        <Button className={"button--circle mx-1"} onClick={view}>
           <img
             src="https://i.ibb.co/f9r6WyJ/play-button-arrowhead.png"
             alt="play button"

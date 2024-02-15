@@ -3,10 +3,17 @@
     text-decoration: none;
     letter-spacing: 2px;
     padding: .5em 1em;
+    display: flex;
+    align-items: center;
     background-color: transparent;
     border: none;
     border-radius: .3em;
     cursor: pointer;
+    overflow: hidden;
+}
+
+.button>img {
+    max-height: 35px;
 }
 
 .button:global(.button--primary) {
@@ -48,18 +55,18 @@
     background-color: var(--clr-theme);
 }
 
-.button:global(.button--play) {
+.button:global(.button--square) {
     width: 50px;
     height: 50px;
-    border-radius: 50%;
     background-color: var(--clr-theme);
-    position: absolute;
-    bottom: 1em;
-    right: 1em;
 }
 
 .button:global(.button--submit):active {
     transform: scale(.95);
+}
+
+.button:hover {
+    background-color: var(--clr-theme-dark);
 }
 
 .button:disabled {

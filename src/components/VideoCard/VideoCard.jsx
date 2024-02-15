@@ -1,27 +1,26 @@
-import axios from "axios";
 import styles from "./VideoCard.module.css";
 import { useNavigate } from "react-router";
 import timeAgo from "../../utils/timeAgo";
 import { useState } from "react";
 import DropDown from "../DropDown/DropDown";
 
-function VideoCard({ vod }) {
+function VideoCard({ video }) {
   const [dropDown, setDropDown] = useState(false);
   const toggle = () => setDropDown(!dropDown);
 
   const navigate = useNavigate();
 
   const onClick = () => {
-    navigate("/explore/" + vod._id);
+    navigate("/explore/" + video._id);
   };
   return (
     <article className={styles.card}>
-      <img src={vod.thumb} onClick={onClick} className={styles.cardImg}></img>
-      <h4 className={styles.title}>{vod.name}</h4>
+      <img src={video.thumb} onClick={onClick} className={styles.cardImg}></img>
+      <h4 className={styles.title}>{video.name}</h4>
 
       <ul className={styles.stats}>
-        <li>{vod.views}&nbsp;views</li>
-        <li>{timeAgo(vod.uploadDate)}</li>
+        <li>{video.views}&nbsp;views</li>
+        <li>{timeAgo(video.uploadDate)}</li>
       </ul>
       <button className={styles.videoCardFuncBtn} onClick={toggle}>
         {!dropDown && (
@@ -39,7 +38,7 @@ function VideoCard({ vod }) {
           ></img>
         )}
       </button>
-      {dropDown && <DropDown vidId={vod._id} />}
+      {dropDown && <DropDown videoId={video._id} />}
     </article>
   );
 }

@@ -1,26 +1,41 @@
 import { useData } from "../../context/DataContext";
 import styles from "./DropDown.module.css";
 import { copyToClipboard } from "./../../utils/copyToClipboard";
+import { useParams } from "react-router";
 
-function DropDown({ vidId }) {
-  const { state, reducerFunc, dispatch } = useData();
+function DropDown({ videoId }) {
+  const { state, reducerFunc, dispatch, watchLaterId } = useData();
   const location = window.location.pathname;
+  const { id } = useParams();
   const remove = () => {
     if (location.includes("history")) {
-      reducerFunc.removeFromHistory(
-        { state, action: { payload: vidId } },
+      reducerFunc.removeVideoFromHistory(
+        { state, action: { payload: videoId } },
         dispatch
       );
     }
     if (location.includes("playlist")) {
-      reducerFunc.removeFromPlaylist(
-        { state, action: { payload: vidId } },
+      reducerFunc.removeVideoFromPlaylist(
+        { state, action: { payload: { playlistId: id, videoId: videoId } } },
+        dispatch
+      );
+    }
+    if (location.includes("watchlater")) {
+      reducerFunc.removeVideoFromWatchLater(
+        {
+          state,
+          action: { payload: videoId },
+        },
         dispatch
       );
     }
   };
   const share = () => copyToClipboard(location);
-  if (location.includes("history") || location.includes("playlist")) {
+  if (
+    location.includes("history") ||
+    location.includes("playlist") ||
+    location.includes("watchlater")
+  ) {
     return (
       <div className={styles.dropDown}>
         <ul>
@@ -55,7 +70,14 @@ function DropDown({ vidId }) {
           ></img>
           <span>Share</span>
         </Li>
-        <Li onClick={() => alert("Added to watch later")}>
+        <Li
+          onClick={() =>
+            reducerFunc.addVideoToWatchLater(
+              { state, action: { payload: videoId } },
+              dispatch
+            )
+          }
+        >
           <img
             src="https://i.ibb.co/CwCpHVw/clock.png"
             alt="clock"
@@ -64,12 +86,20 @@ function DropDown({ vidId }) {
           <span>Add to watch later</span>
         </Li>
         <Li
-          onClick={() =>
-            reducerFunc.openModal(
-              { state, action: { payload: vidId } },
+          onClick={() => {
+            reducerFunc.setModalType(
+              {
+                state,
+                action: { payload: "addToPlaylist" },
+              },
               dispatch
-            )
-          }
+            );
+            reducerFunc.setSelectedVideo(
+              { state, action: { payload: videoId } },
+              dispatch
+            );
+            reducerFunc.openModal(null, dispatch);
+          }}
           className={styles.dropDownItem}
         >
           <img
