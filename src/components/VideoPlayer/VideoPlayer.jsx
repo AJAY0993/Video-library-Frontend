@@ -116,6 +116,11 @@ function VideoPlayer() {
             </Button>
           </li>
           <li>
+            <Button className="button--functional" onClick={likeFunc}>
+              <img src="../Images/icons/like.png" alt="dislike"></img>
+            </Button>
+          </li>
+          <li>
             <Button className="button--functional" onClick={shareVideo}>
               <img src="../Images/icons/share.png" alt="share"></img>
               <span> Share</span>
@@ -201,10 +206,8 @@ function Recommendations({ category }) {
   useEffect(() => {
     async function fetchVideos() {
       try {
-        const res = await fetch(
-          `http://localhost:3000/api/v1/videos?category=${category}`
-        );
-        const data = await res.json();
+        const res = await axios(`${BASE_URL}videos?category=${category}`);
+        const data = res.data;
         setRecommendedVideos(data.data.videos);
       } catch (err) {
         console.log(err);

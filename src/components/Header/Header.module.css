@@ -45,7 +45,7 @@
 }
 
 @media (width<600px) {
-    .header div {
+    .header {
         margin-left: 0;
         height: 60px;
     }

@@ -8,50 +8,48 @@ function Header() {
   const navigate = useNavigate();
   return (
     <header className={styles.headerContainer}>
-      <div>
-        <div className={`${styles.header}`}>
-          <div className={styles.logo}>
-            <img
-              src="https://i.ibb.co/4Ywt8tD/vidvault-high-resolution-logo-transparent.png"
-              alt="vidvault-high-resolution-logo-transparent"
-              border="0"
-            ></img>
-          </div>
-          <ul className={styles.linkList}>
-            {!isAuthenticated ? (
-              <>
-                <li>
-                  <Button
-                    onClick={() => navigate("/login")}
-                    className="button--primary"
-                    disabled={isLoading}
-                  >
-                    Login
-                  </Button>
-                </li>
-                <li>
-                  <Button
-                    onClick={() => navigate("/signup")}
-                    className="button--secondary"
-                    disabled={isLoading}
-                  >
-                    Sign up
-                  </Button>
-                </li>
-              </>
-            ) : (
+      <div className={`${styles.header}`}>
+        <div className={styles.logo}>
+          <img
+            src="https://i.ibb.co/4Ywt8tD/vidvault-high-resolution-logo-transparent.png"
+            alt="vidvault-high-resolution-logo-transparent"
+            border="0"
+          ></img>
+        </div>
+        <ul className={styles.linkList}>
+          {!isAuthenticated ? (
+            <>
               <li>
                 <Button
-                  onClick={logout}
+                  onClick={() => navigate("/login")}
                   className="button--primary"
                   disabled={isLoading}
                 >
-                  Logout
+                  Login
                 </Button>
               </li>
-            )}
-          </ul>
-        </div>
+              <li>
+                <Button
+                  onClick={() => navigate("/signup")}
+                  className="button--secondary"
+                  disabled={isLoading}
+                >
+                  Sign up
+                </Button>
+              </li>
+            </>
+          ) : (
+            <li>
+              <Button
+                onClick={logout}
+                className="button--primary"
+                disabled={isLoading}
+              >
+                Logout
+              </Button>
+            </li>
+          )}
+        </ul>
       </div>
     </header>
   );
