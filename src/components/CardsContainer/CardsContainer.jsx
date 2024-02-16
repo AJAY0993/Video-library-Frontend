@@ -3,12 +3,12 @@ import { useData } from "../../context/DataContext";
 import MyLoader from "../MyLoader/MyLoader";
 import NothingToSee from "../NothingToSee/NothingToSee";
 
-function CardsContainer({ videos, card}) {
+function CardsContainer({ videos, card }) {
   const { state } = useData();
   const { isLoading } = state;
 
   return (
-    <div className="card__container d-flex wrap j-center g-2">
+    <div className="card__container d-flex wrap j-center g-1">
       {isLoading ? (
         <MyLoader />
       ) : videos.length < 1 ? (

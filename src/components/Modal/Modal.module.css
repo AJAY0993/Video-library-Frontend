@@ -17,7 +17,6 @@
     transform: translate(-50%, -50%);
     z-index: 1000;
     background-color: var(--clr-dark);
-    padding: .5em;
     border-radius: .5em;
 }
 
@@ -34,20 +33,5 @@
 }
 
 .closeModalBtn:hover {
-    background-color: var(--clr-very-dark);
-}
-
-.modalContainer>ul {
-    list-style: none;
-    padding: 0;
-}
-
-.modalContainer li {
-    padding: .5em 1em;
-    margin: .5em 0;
-    cursor: pointer;
-}
-
-.modalContainer li:hover {
     background-color: var(--clr-very-dark);
 }

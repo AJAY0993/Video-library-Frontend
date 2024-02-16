@@ -4,12 +4,12 @@ import { useAuth } from "../../context/AuthContext";
 import Button from "../Button/Button";
 
 function Header() {
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated, logout, isLoading } = useAuth();
   const navigate = useNavigate();
   return (
-    <header className={styles.header}>
-      <div className={`wrapper-container ${styles.header}`}>
-        <nav>
+    <header className={styles.headerContainer}>
+      <div>
+        <div className={`${styles.header}`}>
           <div className={styles.logo}>
             <img
               src="https://i.ibb.co/4Ywt8tD/vidvault-high-resolution-logo-transparent.png"
@@ -24,6 +24,7 @@ function Header() {
                   <Button
                     onClick={() => navigate("/login")}
                     className="button--primary"
+                    disabled={isLoading}
                   >
                     Login
                   </Button>
@@ -32,6 +33,7 @@ function Header() {
                   <Button
                     onClick={() => navigate("/signup")}
                     className="button--secondary"
+                    disabled={isLoading}
                   >
                     Sign up
                   </Button>
@@ -39,13 +41,17 @@ function Header() {
               </>
             ) : (
               <li>
-                <Button onClick={logout} className="button--primary">
+                <Button
+                  onClick={logout}
+                  className="button--primary"
+                  disabled={isLoading}
+                >
                   Logout
                 </Button>
               </li>
             )}
           </ul>
-        </nav>
+        </div>
       </div>
     </header>
   );

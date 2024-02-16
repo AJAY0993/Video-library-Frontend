@@ -1,5 +1,6 @@
 .card {
-    width: 400px;
+    position: relative;
+    width: 350px;
     max-width: 100%;
     align-self: flex-start;
     border-radius: 1em;
@@ -8,37 +9,44 @@
 }
 
 .card .cardImg {
+    height: 175px;
     width: 100%;
-    max-width: 400px;
-    aspect-ratio: 16/9;
     border-top-left-radius: 1em;
     border-top-right-radius: 1em;
     object-fit: cover;
 }
 
+.cardContent {
+    padding: .5em 1em;
+}
+
 .title {
     font-weight: 500;
-    padding: .7em;
+    padding: .5em 0;
     display: block;
 }
 
 .stats {
     display: flex;
-    gap: 1em;
+    list-style: none;
+    padding: 0;
 }
 
 .stats li {
-    padding: .5em;
     color: var(--clr-gray);
+    font-size: .9rem;
+    margin-right: .5em;
+}
+
+.dropDownWrapper {
+    position: absolute;
+    top: calc(175px + 1.5rem);
+    right: 10px;
 }
 
 .videoCardFuncBtn {
-    position: absolute;
-    bottom: 3rem;
-    right: 10px;
     height: 40px;
     width: 40px;
-    display: none;
     background: transparent;
     border-radius: 50px;
     border: 0;
@@ -65,12 +73,5 @@
     .videoCardFuncBtn:hover {
         background-color: var(--clr-dark);
 
-    }
-}
-
-@media (width<=600px) {
-    .videoCardFuncBtn {
-        display: block;
-        bottom: 1.2rem;
     }
 }

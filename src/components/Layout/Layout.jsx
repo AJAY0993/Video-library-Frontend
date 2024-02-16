@@ -6,18 +6,15 @@ import SideNavBar from "./../SideNavBar/SideNavBar";
 import styles from "./Layout.module.css";
 
 function Layout({ children }) {
-  const { isLoading } = useAuth();
   const { state } = useData();
   return (
     <>
       <div className="wrapper-container">
         {state.showModal && <Modal />}
-        <div className={styles.layout}>
+        <div>
           <SideNavBar />
-          <main className={styles.main}>
-            <Header />
-            {children}
-          </main>
+          <Header />
+          <main className={styles.main}>{children}</main>
         </div>
       </div>
     </>

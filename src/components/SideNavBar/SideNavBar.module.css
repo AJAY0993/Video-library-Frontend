@@ -1,20 +1,20 @@
 .sideNav {
     height: 100%;
-    /* Full-height: remove this if you want "auto" height */
     width: 60px;
-    /* Set the width of the sidebar */
     position: fixed;
-    /* Fixed Sidebar (stay in place on scroll) */
     z-index: 1;
-    /* Stay on top */
     top: 0;
-    /* Stay at the top */
     left: 0;
     background-color: var(--clr-dark);
-    /* Black */
     overflow-x: hidden;
-    /* Disable horizontal scroll */
     padding-top: 100px;
+}
+
+.navLink {
+    display: flex;
+    align-items: center;
+    margin-top: 2em;
+    text-decoration: none;
 }
 
 .navListIcon {
@@ -25,20 +25,19 @@
     justify-content: center;
     padding: 10px;
     border-radius: 3px;
-    margin: 0 auto;
 }
 
-.navListIcon+.navListIcon {
-    margin-top: 2em;
+.navLinkText {
+    color: var(--clr-light);
 }
 
-.navListIcon:hover {
+.navLink:hover {
     background-color: var(--clr-theme);
     color: var(--clr-theme);
     transition: .3s ease-in-out;
 }
 
-.navListIcon:global(.active) {
+.navLink:global(.active) {
     background-color: var(--clr-theme);
 }
 
@@ -64,7 +63,19 @@
         margin: 0;
     }
 
-    .navListIcon+.navListIcon {
+    .navLink {
         margin-top: 0;
+    }
+}
+
+@media (width < 1100px) {
+    .navLinkText {
+        display: none;
+    }
+}
+
+@media (width>=1100px) {
+    .sideNav {
+        width: 150px;
     }
 }

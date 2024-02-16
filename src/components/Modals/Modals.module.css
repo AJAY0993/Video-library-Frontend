@@ -1,0 +1,30 @@
+.container {
+    padding: 1em 0;
+}
+
+.modalTitle {
+    padding-left: .5em;
+
+}
+
+.closeBtn {
+    background-color: transparent;
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+}
+
+.container>ul {
+    list-style: none;
+    padding: 0;
+}
+
+.container li {
+    padding: .5em 1em;
+    margin: .5em 0;
+    cursor: pointer;
+}
+
+.container li:hover {
+    background-color: var(--clr-very-dark);
+}
