@@ -15,7 +15,19 @@ import Signup from "./pages/Signup/Signup";
 import { ToastContainer } from "react-toastify";
 import { DataProvider } from "./context/DataContext";
 import PageForEachPlaylist from "./pages/PageForEachPlaylist/PageForEachPlaylist";
+import { useEffect } from "react";
+import requestPermission from "./utils/notification";
+import { onMessage } from "firebase/messaging";
+import { messaging } from "./firebase/firebaseConfig";
+import myToast from "./utils/customToast";
+
 function App() {
+  onMessage(messaging, (payload) => {
+    myToast("info", payload.notification.body);
+  });
+  useEffect(() => {
+    requestPermission();
+  }, []);
   return (
     <BrowserRouter>
       <AuthProvider>

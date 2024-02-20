@@ -61,7 +61,8 @@ function AuthProvider({ children }) {
         localStorage.setItem("token", res.data.data.token);
         localStorage.setItem("user", JSON.stringify(res.data.data.user));
         setIsAuthenticated(true);
-        setUser(res.data.user);
+        setUser(res.data.data.user);
+        console.log(user);
         navigate("/", { replace: true });
         myToast("success", "Logged in successfully");
       }
