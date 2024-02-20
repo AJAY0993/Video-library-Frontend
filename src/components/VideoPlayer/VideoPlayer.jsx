@@ -15,8 +15,8 @@ import throttler from "./../../utils/throttler";
 import initialComments from "../../utils/comments";
 
 function VideoPlayer() {
-  const { state, reducerFunc, dispatch } = useData();
-  const { isAuthenticated } = useAuth();
+  const { state, reducerFunc, dispatch, liked } = useData();
+  const { isAuthenticated, user } = useAuth();
   const [currentCategory, setCurrentCategory] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [vod, setVod] = useState(null);
@@ -26,6 +26,7 @@ function VideoPlayer() {
   const [comments, setComments] = useState(initialComments);
   const { id } = useParams();
 
+  //like video
   const likeFunc = throttler(async () => {
     if (!isAuthenticated) return myToast("error", "Please log in!");
     const token = localStorage.getItem("token");
@@ -42,6 +43,7 @@ function VideoPlayer() {
     myToast("success", data.message);
   }, 500);
 
+  //increment views
   useEffect(() => {
     const incrementViews = async () => {
       const configuration = {
@@ -53,6 +55,7 @@ function VideoPlayer() {
     incrementViews();
   }, [id]);
 
+  //fetchVideo
   useEffect(() => {
     const fetchVideo = async () => {
       try {
@@ -71,6 +74,7 @@ function VideoPlayer() {
     fetchVideo();
   }, [id]);
 
+  //add video to history
   useEffect(() => {
     isAuthenticated &&
       reducerFunc.addVideoToHistory(
@@ -79,9 +83,42 @@ function VideoPlayer() {
       );
   }, [id]);
 
+  //Fetch comments
+  useEffect(() => {
+    const getComments = async () => {
+      const res = await axios(`${BASE_URL}videos/${id}/comments`);
+      const data = res.data;
+      setComments((s) => data.data.comments);
+    };
+    getComments();
+  }, [id]);
+
+  //share video
   const shareVideo = () => {
     copyToClipboard(window.location);
     myToast("success", "Link copied successfully");
+  };
+
+  //comment on video
+  const sendComment = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const configuration = {
+        method: "POST",
+        url: `${BASE_URL}videos/${id}/comments`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        data: { comment, username: user.username },
+      };
+      const res = await axios(configuration);
+      myToast("success", res.data.message);
+      console.log(res.data.data.comment);
+      setComments((s) => [...s, res.data.data.comment]);
+      setComment("");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const addVideo = () => {
@@ -111,13 +148,8 @@ function VideoPlayer() {
         <ul className={styles.funcWrapper}>
           <li>
             <Button className="button--functional" onClick={likeFunc}>
-              <img src="../Images/icons/like.png" alt="like"></img>
+              <img src="/Images/icons/like-fill.png" alt="like"></img>
               <span> {Math.floor(likes)}</span>
-            </Button>
-          </li>
-          <li>
-            <Button className="button--functional" onClick={likeFunc}>
-              <img src="../Images/icons/like.png" alt="dislike"></img>
             </Button>
           </li>
           <li>
@@ -172,13 +204,7 @@ function VideoPlayer() {
               <Button
                 className="button--primary"
                 disabled={comment === ""}
-                onClick={() => {
-                  setComments((c) => [
-                    ...comments,
-                    { senderName: "testuser", text: comment },
-                  ]);
-                  setComment((s) => "");
-                }}
+                onClick={sendComment}
               >
                 Send
               </Button>
@@ -187,9 +213,13 @@ function VideoPlayer() {
         </div>
 
         <div className={styles.commentBox}>
-          {comments.map((comment, i) => (
-            <Comment comment={comment} key={i + 1} />
-          ))}
+          {comments.length > 0 ? (
+            comments.map((comment, i) => (
+              <Comment comment={comment} key={i + 1} />
+            ))
+          ) : (
+            <h3>No comments yet</h3>
+          )}
         </div>
       </div>
       <div className={styles.relatedVideosContainer}>
@@ -229,6 +259,7 @@ function Recommendations({ category }) {
 }
 
 function Comment({ comment }) {
+  if (!comment) return null;
   return (
     <div className={styles.comment}>
       <figure className="d-flex a-center">
@@ -239,10 +270,10 @@ function Comment({ comment }) {
           border="0"
         ></img>
         <figcaption className={styles.comment__heading}>
-          {comment.senderName}
+          {comment.username || "Unkbown"}
         </figcaption>
       </figure>
-      <p className={styles.comment__text}>{comment.text}</p>
+      <p className={styles.comment__text}>{comment.comment}</p>
     </div>
   );
 }

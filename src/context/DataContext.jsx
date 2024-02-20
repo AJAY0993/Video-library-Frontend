@@ -1,7 +1,6 @@
 import axios from "axios";
 import { createContext, useContext, useEffect, useReducer } from "react";
 import { BASE_URL } from "../utils/baseurl";
-import myToast from "../utils/customToast";
 import { useAuth } from "./AuthContext";
 import {
   getPlaylists,
@@ -61,19 +60,21 @@ async function getCategories({ state, action }, dispatch) {
   }
 }
 
-async function getLiked(_, dispatch) {
+async function getLiked({ state, action }, dispatch) {
   dispatch({ type: "SET_LOADER", payload: true });
   const token = localStorage.getItem("token");
   const configuration = {
     method: "GET",
-    url: `${BASE_URL}users/my/liked`,
+    url: `${BASE_URL}users/${action.payload}/playlists?playlistName=liked`,
     headers: {
       Authorization: `Bearer ${token}`,
     },
   };
   try {
     const res = await axios(configuration);
-    dispatch({ type: "GET_LIKED", payload: res.data.data.liked });
+    const data = res.data;
+    const liked = data.data.playlists[0].videos;
+    dispatch({ type: "GET_LIKED", payload: liked });
   } catch (err) {
     console.log(err);
   }
@@ -114,6 +115,7 @@ async function likeVideo({ _, action }, dispatch) {
   };
   const res = await axios(configuration);
   const data = res.data.data;
+  console.log(data);
   dispatch({ type: "UPDATE_LIKES", payload: data.likes });
 }
 const reducerFunc = {
@@ -142,9 +144,10 @@ const reducerFunc = {
 };
 
 function DataProvider({ children }) {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
   const [state, dispatch] = useReducer(reducer, initialState);
   const { filter } = state;
+
   useEffect(() => {
     getVideos({ state, payload: state.filter }, dispatch);
   }, [filter]);
@@ -154,20 +157,24 @@ function DataProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    isAuthenticated && getPlaylists(null, dispatch);
+    isAuthenticated &&
+      getPlaylists({ state, action: { payload: user._id } }, dispatch);
   }, [isAuthenticated]);
 
   useEffect(() => {
-    isAuthenticated && getLiked(null, dispatch);
+    isAuthenticated &&
+      getLiked({ state, action: { payload: user._id } }, dispatch);
   }, [isAuthenticated]);
 
   useEffect(() => {
-    isAuthenticated && getWatchLater(null, dispatch);
+    isAuthenticated &&
+      getWatchLater({ state, action: { payload: user._id } }, dispatch);
   }, [isAuthenticated]);
 
   useEffect(() => {
-    isAuthenticated && getHistory(null, dispatch);
-  }, [isAuthenticated]);
+    isAuthenticated &&
+      getHistory({ undefined, action: { payload: user._id } }, dispatch);
+  }, [isAuthenticated, user]);
 
   return (
     <DataContext.Provider value={{ state, reducerFunc, dispatch, ...state }}>

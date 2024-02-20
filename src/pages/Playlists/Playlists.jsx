@@ -7,7 +7,7 @@ import PlaylistCard from "../../components/PlaylistCard/PlaylistCard";
 import Button, { BackButton } from "../../components/Button/Button";
 
 function Playlists() {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
   const { reducerFunc, dispatch, playlists } = useData();
   const createPlaylist = () => {
     reducerFunc.setModalType(

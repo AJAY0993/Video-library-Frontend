@@ -10,7 +10,7 @@ export async function getHistory(_, dispatch) {
             method: "GET",
             url: `${BASE_URL}users/history`,
             headers: {
-                Authorization: `BEARER ${token}`,
+                Authorization: `Bearer ${token}`,
             },
         };
         const res = await axios(configuration);

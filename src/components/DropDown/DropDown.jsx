@@ -2,9 +2,11 @@ import { useData } from "../../context/DataContext";
 import styles from "./DropDown.module.css";
 import { copyToClipboard } from "./../../utils/copyToClipboard";
 import { useParams } from "react-router";
+import { useAuth } from "../../context/AuthContext";
 
 function DropDown({ videoId }) {
   const { state, reducerFunc, dispatch, watchLaterId } = useData();
+  const { user } = useAuth();
   const location = window.location.pathname;
   const { id } = useParams();
   const remove = () => {
@@ -24,7 +26,7 @@ function DropDown({ videoId }) {
       reducerFunc.removeVideoFromWatchLater(
         {
           state,
-          action: { payload: videoId },
+          action: { payload: { videoId, userId: user._id } },
         },
         dispatch
       );
@@ -73,7 +75,7 @@ function DropDown({ videoId }) {
         <Li
           onClick={() =>
             reducerFunc.addVideoToWatchLater(
-              { state, action: { payload: videoId } },
+              { state, action: { payload: { videoId, userId: user._id } } },
               dispatch
             )
           }

@@ -2,9 +2,11 @@ import { useNavigate } from "react-router";
 import Button from "../Button/Button";
 import styles from "./PlaylistCard.module.css";
 import { useData } from "../../context/DataContext";
+import { useAuth } from "../../context/AuthContext";
 
 function PlaylistCard({ playlist }) {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const { state, reducerFunc, dispatch } = useData();
   const view = () => {
     navigate(`${playlist._id}`);
@@ -12,7 +14,10 @@ function PlaylistCard({ playlist }) {
 
   const deletePlaylist = () => {
     reducerFunc.deletePlaylist(
-      { state, action: { payload: playlist._id } },
+      {
+        state,
+        action: { payload: { playlistId: playlist._id, userId: user._id } },
+      },
       dispatch
     );
   };

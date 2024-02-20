@@ -2,8 +2,10 @@ import styles from "./Modals.module.css";
 import { useState } from "react";
 import { useData } from "../../context/DataContext";
 import Button from "../Button/Button";
+import { useAuth } from "../../context/AuthContext";
 
 export function AddToPlaylist() {
+  const { user } = useAuth();
   const { state, reducerFunc, dispatch, playlists, selectedVideo } = useData();
   const myPlaylists = playlists.filter(
     (playlist) =>
@@ -12,12 +14,13 @@ export function AddToPlaylist() {
       playlist.name !== "disliked"
   );
 
-  console.log(myPlaylists);
   const addVideoToPlaylist = (id) => {
     reducerFunc.addVideoToPlaylist(
       {
         state,
-        action: { payload: { playlistId: id, videoId: selectedVideo } },
+        action: {
+          payload: { playlistId: id, videoId: selectedVideo, userId: user._id },
+        },
       },
       dispatch
     );
@@ -50,11 +53,12 @@ export function AddToPlaylist() {
 export function CreatePlaylist() {
   const [playlistName, setPlaylistName] = useState();
   const { state, reducerFunc, dispatch } = useData();
+  const { user } = useAuth();
   const createPlaylist = () =>
     reducerFunc.createPlaylist(
       {
         state,
-        action: { payload: { name: playlistName } },
+        action: { payload: { name: playlistName, userId: user._id } },
       },
       dispatch
     );

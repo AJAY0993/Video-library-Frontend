@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router";
+import { useParams } from "react-router";
 import Layout from "../../components/Layout/Layout";
 import NotLoggedIn from "../../components/NotLoggedIn/NotLoggedIn";
 import { useAuth } from "../../context/AuthContext";
@@ -9,17 +9,17 @@ import CardsContainer from "../../components/CardsContainer/CardsContainer";
 import { BackButton } from "../../components/Button/Button";
 
 function PageForEachPlaylist() {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
   const { state, reducerFunc, dispatch, playlistVideos } = useData();
   const { id } = useParams();
 
   useEffect(() => {
     isAuthenticated &&
       reducerFunc.getPlaylistVideos(
-        { state, action: { payload: id } },
+        { state, action: { payload: { playlistId: id, userId: user._id } } },
         dispatch
       );
-  }, [id]);
+  }, []);
 
   return (
     <Layout>

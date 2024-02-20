@@ -2,11 +2,12 @@ import axios from "axios";
 import { BASE_URL } from "../utils/baseurl";
 import myToast from "../utils/customToast";
 
-export async function getPlaylists(_, dispatch) {
+
+export async function getPlaylists({ state, action }, dispatch) {
     const token = localStorage.getItem("token");
     const configuration = {
         method: "GET",
-        url: `${BASE_URL}users/my/playlists`,
+        url: `${BASE_URL}users/${action.payload}/playlists`,
         headers: {
             Authorization: `Bearer ${token}`,
         },
@@ -35,7 +36,7 @@ export async function createPlaylist({ state, action }, dispatch) {
             name: action.payload.name,
             videos: action.payload.videos || [],
         },
-        url: `${BASE_URL}users/my/playlists`,
+        url: `${BASE_URL}users/${action.payload.userId}/playlists`,
         headers: {
             Authorization: `Bearer ${token}`,
         },
@@ -52,13 +53,13 @@ export async function createPlaylist({ state, action }, dispatch) {
     }
 }
 
-export const getPlaylistVideos = async ({ state, action: { payload: id } }, dispatch) => {
+export const getPlaylistVideos = async ({ state, action: { payload: { playlistId, userId } } }, dispatch) => {
     try {
         dispatch({ type: "SET_LOADER", payload: true });
         const token = localStorage.getItem("token");
         const configuration = {
             method: "GET",
-            url: `${BASE_URL}users/my/playlists/${id}`,
+            url: `${BASE_URL}users/${userId}/playlists/${playlistId}`,
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -80,7 +81,7 @@ export async function addVideoToPlaylist({ state, action }, dispatch) {
         const token = localStorage.getItem("token");
         const configuration = {
             method: "PATCH",
-            url: `${BASE_URL}users/my/playlists/${action.payload.playlistId}/videos/${action.payload.videoId}`,
+            url: `${BASE_URL}users/${action.payload.userId}/playlists/${action.payload.playlistId}/videos/${action.payload.videoId}`,
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -100,7 +101,7 @@ export async function removeVideoFromPlaylist({ state, action }, dispatch) {
         const token = localStorage.getItem("token");
         const configuration = {
             method: "DELETE",
-            url: `${BASE_URL}users/my/playlists/${action.payload.playlistId}/videos/${action.payload.videoId}`,
+            url: `${BASE_URL}users/${action.payload.userId}/playlists/${action.payload.playlistId}/videos/${action.payload.videoId}`,
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -120,11 +121,11 @@ export async function removeVideoFromPlaylist({ state, action }, dispatch) {
 }
 
 export async function deletePlaylist({ state, action }, dispatch) {
-    const playlistId = action.payload;
+    const playlistId = action.payload.playlistId;
     const token = localStorage.getItem("token");
     const configuration = {
         method: "DELETE",
-        url: `${BASE_URL}users/my/playlists/${playlistId}`,
+        url: `${BASE_URL}users/${action.payload.userId}/playlists/${playlistId}`,
         headers: { Authorization: `Bearer ${token}` },
     };
     try {
