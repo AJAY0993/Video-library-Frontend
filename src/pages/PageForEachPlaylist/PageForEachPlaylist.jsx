@@ -7,10 +7,11 @@ import { useData } from "../../context/DataContext";
 import NothingToSee from "./../../components/NothingToSee/NothingToSee";
 import CardsContainer from "../../components/CardsContainer/CardsContainer";
 import { BackButton } from "../../components/Button/Button";
+import MyLoader from "../../components/MyLoader/MyLoader";
 
 function PageForEachPlaylist() {
   const { isAuthenticated, user } = useAuth();
-  const { state, reducerFunc, dispatch, playlistVideos } = useData();
+  const { state, reducerFunc, dispatch, playlistVideos, isLoading } = useData();
   const { id } = useParams();
 
   useEffect(() => {
@@ -27,7 +28,9 @@ function PageForEachPlaylist() {
         <BackButton />
         {!isAuthenticated && <NotLoggedIn />}
         {isAuthenticated &&
-          (playlistVideos.length < 1 ? (
+          (isLoading ? (
+            <MyLoader />
+          ) : playlistVideos.length < 1 ? (
             <NothingToSee />
           ) : (
             <CardsContainer videos={playlistVideos} />

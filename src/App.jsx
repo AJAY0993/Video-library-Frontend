@@ -16,40 +16,34 @@ import { ToastContainer } from "react-toastify";
 import { DataProvider } from "./context/DataContext";
 import PageForEachPlaylist from "./pages/PageForEachPlaylist/PageForEachPlaylist";
 import { useEffect } from "react";
-import requestPermission from "./utils/notification";
-import { onMessage } from "firebase/messaging";
-import { messaging } from "./firebase/firebaseConfig";
 import myToast from "./utils/customToast";
+import Firebase from "./Firebase";
 
 function App() {
-  onMessage(messaging, (payload) => {
-    myToast("info", payload.notification.body);
-  });
-  useEffect(() => {
-    requestPermission();
-  }, []);
   return (
     <BrowserRouter>
       <AuthProvider>
         <DataProvider>
-          <Routes>
-            <Route index element={<Home />} />
-            <Route path="/" element={<Home />} />
-            <Route path="/explore" element={<Explore />}>
-              <Route index element={<Videos />} />
-              <Route path=":id" element={<VideoPlayer />} />
-            </Route>
-            <Route path="/playlists">
-              <Route index element={<Playlists />} />
-              <Route path=":id" element={<PageForEachPlaylist />} />
-            </Route>
-            <Route path="/liked" element={<Library />} />
-            <Route path="/watchLater" element={<WatchLater />} />
-            <Route path="/history" element={<History />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="*" element={<PageNotFound />} />
-          </Routes>
+          <Firebase>
+            <Routes>
+              <Route index element={<Home />} />
+              <Route path="/" element={<Home />} />
+              <Route path="/explore" element={<Explore />}>
+                <Route index element={<Videos />} />
+                <Route path=":id" element={<VideoPlayer />} />
+              </Route>
+              <Route path="/playlists">
+                <Route index element={<Playlists />} />
+                <Route path=":id" element={<PageForEachPlaylist />} />
+              </Route>
+              <Route path="/liked" element={<Library />} />
+              <Route path="/watchLater" element={<WatchLater />} />
+              <Route path="/history" element={<History />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="*" element={<PageNotFound />} />
+            </Routes>
+          </Firebase>
           <ToastContainer
             toastClassName="custom-toast"
             bodyClassName="custom-toast-body"

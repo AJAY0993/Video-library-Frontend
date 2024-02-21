@@ -88,14 +88,6 @@ function setLoader({ state, action }, dispatch) {
   dispatch({ type: "SET_LOADER", payload: action.payload });
 }
 
-function openModal(_, dispatch) {
-  dispatch({ type: "OPEN_MODAL" });
-}
-
-function closeModal(_, dispatch) {
-  dispatch({ type: "CLOSE_MODAL" });
-}
-
 function setModalType({ state, action }, dispatch) {
   dispatch({ type: "SET_MODAL_TYPE", payload: action.payload });
 }
@@ -128,8 +120,6 @@ const reducerFunc = {
   addVideoToHistory,
   removeVideoFromHistory,
   clearHistory,
-  openModal,
-  closeModal,
   getPlaylists,
   createPlaylist,
   getPlaylistVideos,

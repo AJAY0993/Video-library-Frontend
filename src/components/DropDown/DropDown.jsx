@@ -3,8 +3,10 @@ import styles from "./DropDown.module.css";
 import { copyToClipboard } from "./../../utils/copyToClipboard";
 import { useParams } from "react-router";
 import { useAuth } from "../../context/AuthContext";
+import myToast from "../../utils/customToast";
 
 function DropDown({ videoId }) {
+  const { isAuthenticated } = useAuth();
   const { state, reducerFunc, dispatch, watchLaterId } = useData();
   const { user } = useAuth();
   const location = window.location.pathname;
@@ -33,6 +35,7 @@ function DropDown({ videoId }) {
     }
   };
   const share = () => copyToClipboard(location);
+
   if (
     location.includes("history") ||
     location.includes("playlist") ||
@@ -73,12 +76,13 @@ function DropDown({ videoId }) {
           <span>Share</span>
         </Li>
         <Li
-          onClick={() =>
+          onClick={() => {
+            if (!isAuthenticated) return myToast("error", "Please log in!");
             reducerFunc.addVideoToWatchLater(
               { state, action: { payload: { videoId, userId: user._id } } },
               dispatch
-            )
-          }
+            );
+          }}
         >
           <img
             src="https://i.ibb.co/CwCpHVw/clock.png"
@@ -89,18 +93,12 @@ function DropDown({ videoId }) {
         </Li>
         <Li
           onClick={() => {
-            reducerFunc.setModalType(
-              {
-                state,
-                action: { payload: "addToPlaylist" },
-              },
-              dispatch
-            );
+            dispatch({ type: "SET_MODAL_TYPE", payload: "addToPlaylist" });
             reducerFunc.setSelectedVideo(
               { state, action: { payload: videoId } },
               dispatch
             );
-            reducerFunc.openModal(null, dispatch);
+            dispatch({ type: "OPEN_MODAL" });
           }}
           className={styles.dropDownItem}
         >

@@ -56,13 +56,11 @@ function AuthProvider({ children }) {
       setIsLoading(true);
       myToast("info", "Please wait a moment");
       const res = await axios(configuration);
-      console.log(res);
       if (res.data.status === "success") {
         localStorage.setItem("token", res.data.data.token);
         localStorage.setItem("user", JSON.stringify(res.data.data.user));
         setIsAuthenticated(true);
         setUser(res.data.data.user);
-        console.log(user);
         navigate("/", { replace: true });
         myToast("success", "Logged in successfully");
       }

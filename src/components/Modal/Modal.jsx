@@ -2,10 +2,10 @@ import { useData } from "../../context/DataContext";
 import styles from "./Modal.module.css";
 import { AddToPlaylist, CreatePlaylist } from "../Modals/Modals";
 function Modal() {
-  const { reducerFunc, dispatch, modalType } = useData();
+  const { dispatch, modalType } = useData();
 
   const closeModal = () => {
-    reducerFunc.closeModal(null, dispatch);
+    dispatch({ type: "CLOSE_MODAL" });
   };
 
   return (
