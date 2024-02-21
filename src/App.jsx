@@ -15,16 +15,14 @@ import Signup from "./pages/Signup/Signup";
 import { ToastContainer } from "react-toastify";
 import { DataProvider } from "./context/DataContext";
 import PageForEachPlaylist from "./pages/PageForEachPlaylist/PageForEachPlaylist";
-import { useEffect } from "react";
-import myToast from "./utils/customToast";
 import Firebase from "./Firebase";
 
 function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <DataProvider>
-          <Firebase>
+        <Firebase>
+          <DataProvider>
             <Routes>
               <Route index element={<Home />} />
               <Route path="/" element={<Home />} />
@@ -43,12 +41,12 @@ function App() {
               <Route path="/signup" element={<Signup />} />
               <Route path="*" element={<PageNotFound />} />
             </Routes>
-          </Firebase>
-          <ToastContainer
-            toastClassName="custom-toast"
-            bodyClassName="custom-toast-body"
-          />
-        </DataProvider>
+            <ToastContainer
+              toastClassName="custom-toast"
+              bodyClassName="custom-toast-body"
+            />
+          </DataProvider>
+        </Firebase>
       </AuthProvider>
     </BrowserRouter>
   );

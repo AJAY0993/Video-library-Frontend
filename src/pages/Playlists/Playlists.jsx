@@ -8,16 +8,10 @@ import Button, { BackButton } from "../../components/Button/Button";
 
 function Playlists() {
   const { isAuthenticated, user } = useAuth();
-  const { reducerFunc, dispatch, playlists } = useData();
-  const createPlaylist = () => {
-    reducerFunc.setModalType(
-      {
-        undefined,
-        action: { payload: "createPlaylist" },
-      },
-      dispatch
-    );
-    reducerFunc.openModal(undefined, dispatch);
+  const { dispatch, playlists } = useData();
+  const openCreatePlaylistModal = () => {
+    dispatch({ type: "SET_MODAL_TYPE", payload: "createPlaylist" });
+    dispatch({ type: "OPEN_MODAL" });
   };
   return (
     <Layout>
@@ -35,7 +29,10 @@ function Playlists() {
                 ))
               )}
             </div>
-            <Button className="button--primary m-auto" onClick={createPlaylist}>
+            <Button
+              className="button--primary m-auto"
+              onClick={openCreatePlaylistModal}
+            >
               Create New
             </Button>
           </>

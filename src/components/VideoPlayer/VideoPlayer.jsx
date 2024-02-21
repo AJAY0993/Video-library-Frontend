@@ -121,16 +121,12 @@ function VideoPlayer() {
     }
   };
 
-  const addVideo = () => {
-    reducerFunc.setModalType(
-      {
-        state,
-        action: { payload: "addToPlaylist" },
-      },
-      dispatch
-    );
+  //open add to playlist modal
+  const openAddToPlaylistModal = () => {
+    if (!isAuthenticated) return myToast("error", "Please log in!");
+    dispatch({ type: "SET_MODAL_TYPE", payload: "addToPlaylist" });
+    dispatch({ type: "OPEN_MODAL" });
     reducerFunc.setSelectedVideo({ state, action: { payload: id } }, dispatch);
-    reducerFunc.openModal(null, dispatch);
   };
   if (isLoading) return <MyLoader />;
   return (
@@ -159,7 +155,10 @@ function VideoPlayer() {
             </Button>
           </li>
           <li>
-            <Button className="button--functional" onClick={addVideo}>
+            <Button
+              className="button--functional"
+              onClick={openAddToPlaylistModal}
+            >
               <img src="../Images/icons/add.png" alt="add"></img>
               <span> Add to</span>
             </Button>

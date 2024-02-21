@@ -87,10 +87,6 @@ function setFilter({ state, action }, dispatch) {
 function setLoader({ state, action }, dispatch) {
   dispatch({ type: "SET_LOADER", payload: action.payload });
 }
-
-function setModalType({ state, action }, dispatch) {
-  dispatch({ type: "SET_MODAL_TYPE", payload: action.payload });
-}
 function setSelectedVideo({ state, action: { payload: id } }, dispatch) {
   dispatch({ type: "VIDEO_SELECTED", payload: id });
 }
@@ -130,7 +126,6 @@ const reducerFunc = {
   addVideoToWatchLater,
   likeVideo,
   setSelectedVideo,
-  setModalType,
 };
 
 function DataProvider({ children }) {

@@ -1,5 +1,4 @@
 /* global firebase */
-
 importScripts("https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js");
 
 importScripts(
@@ -7,27 +6,29 @@ importScripts(
 );
 
 // "Default" Firebase configuration (prevents errors)
-const defaultConfig = {
+const firebaseConfig = {
     apiKey: true,
     projectId: true,
     messagingSenderId: true,
     appId: true,
 };
-
 // Initialize Firebase app
-firebase.initializeApp(defaultConfig);
+firebase.initializeApp(firebaseConfig);
 const messaging = firebase.messaging();
 
 //Listens for background notifications
-messaging.onBackgroundMessage((payload) => {
-    console.log("Received background message: ", payload);
+messaging.onBackgroundMessage(({ data }) => {
+    console.log("Received background message: ", data);
 
     //customise notification
-    const notificationTitle = payload.notification.title;
-    const notificationOptions = {
-        body: payload.notification.body,
-        icon: payload.notification.icon || "/icon.png",
-    };
+    if (data && data.title) {
+        const notificationTitle = data.title;
+        const notificationOptions = {
+            body: data.body,
+            image: data.image,
+            icon: data.icon || "/icon.png",
+        };
 
-    self.registration.showNotification(notificationTitle, notificationOptions);
+        self.registration.showNotification(notificationTitle, notificationOptions);
+    }
 });
