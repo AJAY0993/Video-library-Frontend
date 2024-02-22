@@ -1,1 +1,1 @@
-export const BASE_URL = import.meta.env.PROD ? import.meta.env.VITE_PRODUCTION_URL : import.meta.env.VITE_DEVLOPMENT_URL 
+export const BASE_URL = import.meta.env.PROD ? 'https://video-library-api-2-0.onrender.com/api/v1/' : 'http://localhost:3000/api/v1/'
