@@ -23,13 +23,13 @@ export async function getWatchLater({ state, action }, dispatch) {
 
 }
 
-export async function addVideoToWatchLater({ state, action }, dispatch) {
+export async function addVideoToWatchLater(payload, dispatch) {
     try {
         dispatch({ type: "SET_LOADER", payload: true });
         const token = localStorage.getItem('token')
         const configuration = {
             method: "PATCH",
-            url: `${BASE_URL}users/${action.payload.userId}/playlists/watchLater/videos/${action.payload.videoId}`,
+            url: `${BASE_URL}users/${payload.userId}/playlists/watchLater/videos/${payload.videoId}`,
             headers: {
                 Authorization: `Bearer ${token}`
             },
@@ -51,14 +51,13 @@ export async function addVideoToWatchLater({ state, action }, dispatch) {
     }
 }
 
-export async function removeVideoFromWatchLater({ state, action }, dispatch) {
+export async function removeVideoFromWatchLater(payload, dispatch) {
     try {
-        console.log(action.payload)
         dispatch({ type: "SET_LOADER", payload: true });
         const token = localStorage.getItem('token')
         const configuration = {
             method: "DELETE",
-            url: `${BASE_URL}users/${action.payload.userId}/playlists/watchLater/videos/${action.payload.videoId}`,
+            url: `${BASE_URL}users/${payload.userId}/playlists/watchLater/videos/${payload.videoId}`,
             headers: {
                 Authorization: `Bearer ${token}`
             },

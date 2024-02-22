@@ -1,117 +1,102 @@
+import React from "react";
 import { useData } from "../../context/DataContext";
-import styles from "./DropDown.module.css";
 import { copyToClipboard } from "./../../utils/copyToClipboard";
-import { useParams } from "react-router";
+import { useLocation, useParams } from "react-router";
 import { useAuth } from "../../context/AuthContext";
 import myToast from "../../utils/customToast";
+import styles from "./DropDown.module.css";
 
 function DropDown({ videoId }) {
-  const { isAuthenticated } = useAuth();
-  const { state, reducerFunc, dispatch, watchLaterId } = useData();
-  const { user } = useAuth();
-  const location = window.location.pathname;
+  const { isAuthenticated, user } = useAuth();
+  const { reducerFunc, dispatch } = useData();
+  const location = useLocation();
   const { id } = useParams();
-  const remove = () => {
-    if (location.includes("history")) {
-      reducerFunc.removeVideoFromHistory(
-        { state, action: { payload: videoId } },
-        dispatch
-      );
-    }
-    if (location.includes("playlist")) {
+
+  const removeVideo = (videoIdToRemove) => {
+    //Remove from playlist
+    if (location.pathname.includes("playlists")) {
       reducerFunc.removeVideoFromPlaylist(
-        { state, action: { payload: { playlistId: id, videoId: videoId } } },
+        { playlistId: id, videoId: videoIdToRemove },
         dispatch
       );
     }
-    if (location.includes("watchlater")) {
+
+    //Remove from watchlater
+    if (location.pathname.includes("watchlater")) {
       reducerFunc.removeVideoFromWatchLater(
-        {
-          state,
-          action: { payload: { videoId, userId: user._id } },
-        },
+        { videoId, userId: user._id },
         dispatch
       );
+    }
+
+    //Remove from history
+    if (location.pathname.includes("history")) {
+      reducerFunc.removeVideoFromHistory({ videoId: videoId }, dispatch);
     }
   };
-  const share = () => copyToClipboard(location);
 
-  if (
-    location.includes("history") ||
-    location.includes("playlist") ||
-    location.includes("watchlater")
-  ) {
+  //Share video handler
+  const handleShare = () => copyToClipboard(location.pathname);
+
+  //Add to watchlater
+  const addVideoToWatchLater = () => {
+    if (!isAuthenticated) return myToast("error", "Please log in!");
+    reducerFunc.addVideoToWatchLater({ videoId, userId: user._id }, dispatch);
+  };
+
+  //Save video to playlist
+  const saveToPlaylist = () => {
+    dispatch({ type: "SET_MODAL_TYPE", payload: "addToPlaylist" });
+    dispatch({ type: "VIDEO_SELECTED", payload: videoId });
+    dispatch({ type: "OPEN_MODAL" });
+  };
+
+  function renderActions() {
     return (
       <div className={styles.dropDown}>
         <ul>
-          <Li onClick={share}>
-            <img
-              src="https://i.ibb.co/N6W8qVD/share.png"
-              alt="share"
-              border="0"
-            ></img>
+          <Li onClick={handleShare}>
+            <img src="https://i.ibb.co/N6W8qVD/share.png" alt="share" />
             <span>Share</span>
           </Li>
-          <Li onClick={remove}>
-            <img
-              src="https://i.ibb.co/JqXFGZ5/delete.png"
-              alt="delete"
-              border="0"
-            ></img>
+          <Li onClick={() => removeVideo(videoId)}>
+            <img src="https://i.ibb.co/JqXFGZ5/delete.png" alt="delete" />
             Remove
           </Li>
         </ul>
       </div>
     );
   }
-  return (
-    <div className={styles.dropDown}>
-      <ul>
-        <Li onClick={share}>
-          <img
-            src="https://i.ibb.co/N6W8qVD/share.png"
-            alt="share"
-            border="0"
-          ></img>
-          <span>Share</span>
-        </Li>
-        <Li
-          onClick={() => {
-            if (!isAuthenticated) return myToast("error", "Please log in!");
-            reducerFunc.addVideoToWatchLater(
-              { state, action: { payload: { videoId, userId: user._id } } },
-              dispatch
-            );
-          }}
-        >
-          <img
-            src="https://i.ibb.co/CwCpHVw/clock.png"
-            alt="clock"
-            border="0"
-          ></img>
-          <span>Add to watch later</span>
-        </Li>
-        <Li
-          onClick={() => {
-            dispatch({ type: "SET_MODAL_TYPE", payload: "addToPlaylist" });
-            reducerFunc.setSelectedVideo(
-              { state, action: { payload: videoId } },
-              dispatch
-            );
-            dispatch({ type: "OPEN_MODAL" });
-          }}
-          className={styles.dropDownItem}
-        >
-          <img
-            src="https://i.ibb.co/dW6jfY0/add-to-playlist-1.png"
-            alt="add-to-playlist-1"
-            border="0"
-          ></img>
-          <span>Save to Playlist</span>
-        </Li>
-      </ul>
-    </div>
-  );
+
+  function renderDefaultActions() {
+    return (
+      <div className={styles.dropDown}>
+        <ul>
+          <Li onClick={handleShare}>
+            <img src="https://i.ibb.co/N6W8qVD/share.png" alt="share" />
+            <span>Share</span>
+          </Li>
+          <Li onClick={addVideoToWatchLater}>
+            <img src="https://i.ibb.co/CwCpHVw/clock.png" alt="clock" />
+            <span>Add to watch later</span>
+          </Li>
+          <Li onClick={saveToPlaylist} className={styles.dropDownItem}>
+            <img
+              src="https://i.ibb.co/dW6jfY0/add-to-playlist-1.png"
+              alt="add-to-playlist-1"
+            />
+            <span>Save to Playlist</span>
+          </Li>
+        </ul>
+      </div>
+    );
+  }
+
+  return location.pathname.includes("history") ||
+    location.pathname.includes("playlist") ||
+    location.pathname.includes("watchlater")
+    ? renderActions()
+    : renderDefaultActions();
 }
 
 function Li({ children, onClick }) {

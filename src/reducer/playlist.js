@@ -96,12 +96,12 @@ export async function addVideoToPlaylist({ state, action }, dispatch) {
     }
 }
 
-export async function removeVideoFromPlaylist({ state, action }, dispatch) {
+export async function removeVideoFromPlaylist(payload, dispatch) {
     try {
         const token = localStorage.getItem("token");
         const configuration = {
             method: "DELETE",
-            url: `${BASE_URL}users/${action.payload.userId}/playlists/${action.payload.playlistId}/videos/${action.payload.videoId}`,
+            url: `${BASE_URL}users/${payload.userId}/playlists/${payload.playlistId}/videos/${payload.videoId}`,
             headers: {
                 Authorization: `Bearer ${token}`,
             },

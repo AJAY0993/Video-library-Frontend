@@ -30,6 +30,7 @@ function AuthProvider({ children }) {
       const data = res.data;
       if (data.status === "success") {
         setIsAuthenticated(true);
+        setUser(res.data.data.user);
         localStorage.setItem("token", data.data.token);
         toast.success("Signed UP successfully", {
           position: toast.POSITION.TOP_RIGHT,

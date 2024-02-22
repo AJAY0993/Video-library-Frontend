@@ -1,6 +1,7 @@
 import { useData } from "../../context/DataContext";
-import styles from "./Modal.module.css";
 import { AddToPlaylist, CreatePlaylist } from "../Modals/Modals";
+import styles from "./Modal.module.css";
+
 function Modal() {
   const { dispatch, modalType } = useData();
 

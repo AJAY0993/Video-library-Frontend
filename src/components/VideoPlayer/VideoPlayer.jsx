@@ -76,11 +76,7 @@ function VideoPlayer() {
 
   //add video to history
   useEffect(() => {
-    isAuthenticated &&
-      reducerFunc.addVideoToHistory(
-        { state, action: { payload: id } },
-        dispatch
-      );
+    isAuthenticated && reducerFunc.addVideoToHistory({ videoId: id }, dispatch);
   }, [id]);
 
   //Fetch comments

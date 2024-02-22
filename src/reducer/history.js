@@ -22,9 +22,9 @@ export async function getHistory(_, dispatch) {
     }
 }
 
-export async function addVideoToHistory({ state, action }, dispatch) {
+export async function addVideoToHistory(payload, dispatch) {
     dispatch({ type: "SET_LOADER", payload: true });
-    const vidId = action.payload;
+    const videoId = payload.videoId;
     const token = localStorage.getItem("token");
     const configuration = {
         method: "PATCH",
@@ -32,7 +32,7 @@ export async function addVideoToHistory({ state, action }, dispatch) {
         headers: {
             Authorization: `Bearer ${token}`,
         },
-        data: { vidId: vidId },
+        data: { videoId: videoId },
     };
     const res = await axios(configuration);
     const data = res.data.data;
@@ -56,7 +56,7 @@ export async function clearHistory(_, dispatch) {
     dispatch({ type: "SET_LOADER", payload: false });
 }
 
-export async function removeVideoFromHistory({ state, action }, dispatch) {
+export async function removeVideoFromHistory(payload, dispatch) {
     dispatch({ type: "SET_LOADER", payload: true });
     try {
         const token = localStorage.getItem("token");
@@ -66,10 +66,11 @@ export async function removeVideoFromHistory({ state, action }, dispatch) {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
-            data: { vidId: action.payload },
+            data: { videoId: payload.videoId },
         };
         const res = await axios(configuration);
         const data = res.data;
+        console.log(data)
         myToast("success", "Video removed successfully");
         dispatch({ type: "REMOVE_HISTORY", payload: data.data.history.reverse() });
         dispatch({ type: "SET_LOADER", payload: false });
