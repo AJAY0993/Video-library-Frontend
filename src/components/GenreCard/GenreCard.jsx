@@ -3,12 +3,11 @@ import styles from "./GenreCard.module.css";
 import { useNavigate } from "react-router-dom";
 
 function GenreCard({ genre }) {
-  const { state, reducerFunc, dispatch } = useData();
-  const { setFilter } = reducerFunc;
+  const { dispatch } = useData();
   const navigate = useNavigate();
   function onClick() {
     navigate("/explore");
-    setFilter({ state, action: { payload: genre.name } }, dispatch);
+    dispatch({ type: "SET_FILTER", payload: genre.name });
   }
   return (
     <article
