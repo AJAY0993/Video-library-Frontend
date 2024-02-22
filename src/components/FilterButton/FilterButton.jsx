@@ -2,10 +2,9 @@ import { useData } from "../../context/DataContext";
 import styles from "./FilterButton.module.css";
 
 function FilterButton({ text }) {
-  const { state, reducerFunc, dispatch } = useData();
-  const { setFilter } = reducerFunc;
+  const { state, dispatch } = useData();
   function onClick() {
-    setFilter({ state, action: { payload: text } }, dispatch);
+    dispatch({ type: "SET_FILTER", payload: text });
   }
   return (
     <li>

@@ -1,11 +1,16 @@
-import VideoCard from "../VideoCard/VideoCard";
+import { useState } from "react";
 import { useData } from "../../context/DataContext";
+import VideoCard from "../VideoCard/VideoCard";
 import MyLoader from "../MyLoader/MyLoader";
 import NothingToSee from "../NothingToSee/NothingToSee";
 
-function CardsContainer({ videos, card }) {
-  const { state } = useData();
-  const { isLoading } = state;
+function CardsContainer({ videos }) {
+  const { isLoading } = useData();
+  const [openDropDownId, setOpenDropDownId] = useState();
+
+  const toggleDropDownId = (id) => {
+    setOpenDropDownId((openDropDownId) => (openDropDownId === id ? null : id));
+  };
 
   return (
     <div className="card__container d-flex wrap j-center g-1">
@@ -14,7 +19,14 @@ function CardsContainer({ videos, card }) {
       ) : videos.length < 1 ? (
         <NothingToSee />
       ) : (
-        videos.map((video, i) => <VideoCard video={video} key={i + 1} />)
+        videos.map((video, i) => (
+          <VideoCard
+            video={video}
+            key={i + 1}
+            openDropDownId={openDropDownId}
+            toggleDropDownId={toggleDropDownId}
+          />
+        ))
       )}
     </div>
   );

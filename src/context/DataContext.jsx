@@ -80,10 +80,6 @@ async function getLiked({ state, action }, dispatch) {
   }
 }
 
-function setFilter({ state, action }, dispatch) {
-  dispatch({ type: "SET_FILTER", payload: action.payload });
-}
-
 function setLoader({ state, action }, dispatch) {
   dispatch({ type: "SET_LOADER", payload: action.payload });
 }
@@ -109,7 +105,6 @@ async function likeVideo({ _, action }, dispatch) {
 const reducerFunc = {
   getVideos,
   getCategories,
-  setFilter,
   setLoader,
   getHistory,
   getLiked,
