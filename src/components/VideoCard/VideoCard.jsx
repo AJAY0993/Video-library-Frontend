@@ -12,7 +12,7 @@ function VideoCard({ video, openDropDownId, toggleDropDownId }) {
   const toggleDropDown = () => toggleDropDownId(video._id)
 
   const handleCardClick = () => {
-    navigate("/explore/video/" + video._id)
+    navigate("/explore/" + video._id)
   }
 
   return (
