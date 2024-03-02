@@ -1,21 +1,21 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import "./App.css";
-import Home from "./pages/Home";
-import Explore from "./pages/Explore/Explore";
-import Playlists from "./pages/Playlists/Playlists";
-import Library from "./pages/Liked";
-import WatchLater from "./pages/WatchLater";
-import History from "./pages/History/History";
-import VideoPlayer from "./components/VideoPlayer/VideoPlayer";
-import Videos from "./components/Videos/Videos";
-import PageNotFound from "./pages/PageNotFound";
-import { AuthProvider } from "./context/AuthContext";
-import Login from "./pages/Login/Login";
-import Signup from "./pages/Signup/Signup";
-import { ToastContainer } from "react-toastify";
-import { DataProvider } from "./context/DataContext";
-import PageForEachPlaylist from "./pages/PageForEachPlaylist/PageForEachPlaylist";
-import Firebase from "./Firebase";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
+import "./App.css"
+import Home from "./pages/Home"
+import Explore from "./pages/Explore/Explore"
+import Playlists from "./pages/Playlists/Playlists"
+import Library from "./pages/Liked"
+import WatchLater from "./pages/WatchLater"
+import History from "./pages/History/History"
+import VideoPlayer from "./components/VideoPlayer/VideoPlayer"
+import Videos from "./components/Videos/Videos"
+import PageNotFound from "./pages/PageNotFound"
+import { AuthProvider } from "./context/AuthContext"
+import Login from "./pages/Login/Login"
+import Signup from "./pages/Signup/Signup"
+import { ToastContainer } from "react-toastify"
+import { DataProvider } from "./context/DataContext"
+import PageForEachPlaylist from "./pages/PageForEachPlaylist/PageForEachPlaylist"
+import Firebase from "./Firebase"
 
 function App() {
   return (
@@ -49,7 +49,7 @@ function App() {
         </Firebase>
       </AuthProvider>
     </BrowserRouter>
-  );
+  )
 }
 
-export default App;
+export default App

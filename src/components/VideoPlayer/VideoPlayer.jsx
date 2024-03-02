@@ -1,130 +1,132 @@
-import { useEffect, useRef, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import styles from "./VideoPlayer.module.css";
-import VideoCard from "../VideoCard/VideoCard";
-import timeAgo from "../../utils/timeAgo";
-import { copyToClipboard } from "../../utils/copyToClipboard";
-import myToast from "../../utils/customToast";
-import { BASE_URL } from "../../utils/baseurl";
-import axios from "axios";
-import Button from "../Button/Button";
-import { useData } from "../../context/DataContext";
-import { useAuth } from "../../context/AuthContext";
-import MyLoader from "./../MyLoader/MyLoader";
-import throttler from "./../../utils/throttler";
-import initialComments from "../../utils/comments";
+import { useEffect, useState } from "react"
+import { Link, useParams } from "react-router-dom"
+import axios from "axios"
+
+import { useData } from "../../context/DataContext"
+import { useAuth } from "../../context/AuthContext"
+
+import MyLoader from "./../MyLoader/MyLoader"
+import VideoCard from "../VideoCard/VideoCard"
+import Button from "../Button/Button"
+import initialComments from "../../utils/comments"
+import timeAgo from "../../utils/timeAgo"
+import myToast from "../../utils/customToast"
+import throttler from "./../../utils/throttler"
+import styles from "./VideoPlayer.module.css"
+
+import { BASE_URL } from "../../utils/baseurl"
+import { copyToClipboard } from "../../utils/copyToClipboard"
 
 function VideoPlayer() {
-  const { state, reducerFunc, dispatch, liked } = useData();
-  const { isAuthenticated, user } = useAuth();
-  const [currentCategory, setCurrentCategory] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [vod, setVod] = useState(null);
-  const [show, setShow] = useState(false);
-  const [likes, setLikes] = useState(0);
-  const [comment, setComment] = useState("");
-  const [comments, setComments] = useState(initialComments);
-  const { id } = useParams();
+  const { state, reducerFunc, dispatch, liked } = useData()
+  const { isAuthenticated, user } = useAuth()
+  const [currentCategory, setCurrentCategory] = useState(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const [vod, setVod] = useState(null)
+  const [show, setShow] = useState(false)
+  const [likes, setLikes] = useState(0)
+  const [comment, setComment] = useState("")
+  const [comments, setComments] = useState(initialComments)
+  const { id } = useParams()
 
   //like video
   const likeFunc = throttler(async () => {
-    if (!isAuthenticated) return myToast("error", "Please log in!");
-    const token = localStorage.getItem("token");
+    if (!isAuthenticated) return myToast("error", "Please log in!")
+    const token = localStorage.getItem("token")
     const configurations = {
       method: "PATCH",
       url: `${BASE_URL}videos/${id}/like`,
       headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-    const res = await axios(configurations);
-    const data = res.data;
-    setLikes((s) => data.data.likes);
-    myToast("success", data.message);
-  }, 500);
+        Authorization: `Bearer ${token}`
+      }
+    }
+    const res = await axios(configurations)
+    const data = res.data
+    setLikes((s) => data.data.likes)
+    myToast("success", data.message)
+  }, 500)
 
   //increment views
   useEffect(() => {
     const incrementViews = async () => {
       const configuration = {
         method: "PATCH",
-        url: `${BASE_URL}videos/${id}/views`,
-      };
-      await axios(configuration);
-    };
-    incrementViews();
-  }, [id]);
+        url: `${BASE_URL}videos/${id}/views`
+      }
+      await axios(configuration)
+    }
+    incrementViews()
+  }, [id])
 
   //fetchVideo
   useEffect(() => {
-    const fetchVideo = async () => {
+    async function fetchVideo() {
       try {
-        setIsLoading(true);
-        const res = await fetch(`${BASE_URL}videos/${id}`);
-        const data = await res.json();
-        setVod(data.data.video);
-        setCurrentCategory(data.data.video.category);
-        setLikes((s) => data.data.video.likes);
+        setIsLoading(true)
+        const res = await fetch(`${BASE_URL}videos/${id}`)
+        const data = await res.json()
+        setVod(data.data.video)
+        setCurrentCategory(data.data.video.category)
+        setLikes((s) => data.data.video.likes)
       } catch (error) {
-        console.log(error);
+        console.log(error)
       } finally {
-        setIsLoading(false);
+        setIsLoading(false)
       }
-    };
-    fetchVideo();
-  }, [id]);
+    }
+    fetchVideo()
+  }, [id])
 
   //add video to history
   useEffect(() => {
-    isAuthenticated && reducerFunc.addVideoToHistory({ videoId: id }, dispatch);
-  }, [id]);
+    isAuthenticated && reducerFunc.addVideoToHistory({ videoId: id }, dispatch)
+  }, [id])
 
   //Fetch comments
   useEffect(() => {
     const getComments = async () => {
-      const res = await axios(`${BASE_URL}videos/${id}/comments`);
-      const data = res.data;
-      setComments((s) => data.data.comments);
-    };
-    getComments();
-  }, [id]);
+      const res = await axios(`${BASE_URL}videos/${id}/comments`)
+      const data = res.data
+      setComments((s) => data.data.comments)
+    }
+    getComments()
+  }, [id])
 
   //share video
   const shareVideo = () => {
-    copyToClipboard(window.location);
-    myToast("success", "Link copied successfully");
-  };
+    copyToClipboard(window.location)
+    myToast("success", "Link copied successfully")
+  }
 
   //comment on video
   const sendComment = async () => {
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("token")
       const configuration = {
         method: "POST",
         url: `${BASE_URL}videos/${id}/comments`,
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token}`
         },
-        data: { comment, username: user.username },
-      };
-      const res = await axios(configuration);
-      myToast("success", res.data.message);
-      console.log(res.data.data.comment);
-      setComments((s) => [...s, res.data.data.comment]);
-      setComment("");
+        data: { comment, username: user.username }
+      }
+      const res = await axios(configuration)
+      myToast("success", res.data.message)
+      setComments((s) => [...s, res.data.data.comment])
+      setComment("")
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
-  };
+  }
 
   //open add to playlist modal
   const openAddToPlaylistModal = () => {
-    if (!isAuthenticated) return myToast("error", "Please log in!");
-    dispatch({ type: "SET_MODAL_TYPE", payload: "addToPlaylist" });
-    dispatch({ type: "OPEN_MODAL" });
-    reducerFunc.setSelectedVideo({ state, action: { payload: id } }, dispatch);
-  };
-  if (isLoading) return <MyLoader />;
+    if (!isAuthenticated) return myToast("error", "Please log in!")
+    dispatch({ type: "SET_MODAL_TYPE", payload: "addToPlaylist" })
+    dispatch({ type: "OPEN_MODAL" })
+    reducerFunc.setSelectedVideo({ state, action: { payload: id } }, dispatch)
+  }
+  if (isLoading) return <MyLoader />
   return (
     <div className={styles.container}>
       <div className={styles.videoPlayer}>
@@ -223,25 +225,25 @@ function VideoPlayer() {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 function Recommendations({ category }) {
-  const [recommendedVideos, setRecommendedVideos] = useState(null);
+  const [recommendedVideos, setRecommendedVideos] = useState(null)
   useEffect(() => {
     async function fetchVideos() {
       try {
-        const res = await axios(`${BASE_URL}videos?category=${category}`);
-        const data = res.data;
-        setRecommendedVideos(data.data.videos);
+        const res = await axios(`${BASE_URL}videos?category=${category}`)
+        const data = res.data
+        setRecommendedVideos(data.data.videos)
       } catch (err) {
-        console.log(err);
+        console.log(err)
       } finally {
-        console.log("done");
+        console.log("done")
       }
     }
-    fetchVideos();
-  }, [category]);
+    fetchVideos()
+  }, [category])
   return (
     <>
       <h3>Similar videos</h3>
@@ -250,11 +252,11 @@ function Recommendations({ category }) {
           <VideoCard video={video} key={i + 1} />
         ))}
     </>
-  );
+  )
 }
 
 function Comment({ comment }) {
-  if (!comment) return null;
+  if (!comment) return null
   return (
     <div className={styles.comment}>
       <figure className="d-flex a-center">
@@ -265,11 +267,11 @@ function Comment({ comment }) {
           border="0"
         ></img>
         <figcaption className={styles.comment__heading}>
-          {comment.username || "Unkbown"}
+          {comment.username || "Unknown"}
         </figcaption>
       </figure>
       <p className={styles.comment__text}>{comment.comment}</p>
     </div>
-  );
+  )
 }
-export default VideoPlayer;
+export default VideoPlayer

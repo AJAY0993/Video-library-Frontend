@@ -23,7 +23,7 @@ export async function getPlaylists({ state, action }, dispatch) {
             playlist.name !== "watchLater"
     );
 
-    dispatch({ type: "GET_PLAYLISTS", payload: playlists });
+    dispatch({ type: "SET_PLAYLISTS", payload: playlists });
     dispatch({ type: "SET_LOADER", payload: false });
 }
 

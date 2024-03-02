@@ -2,15 +2,18 @@
     color: var(--crl-light);
     text-decoration: none;
     letter-spacing: 2px;
+    font-weight: 500;
     padding: .5em 1em;
     display: flex;
     align-items: center;
+    justify-content: center;
     background-color: transparent;
     border: none;
-    border-radius: .3em;
+    border-radius: .5em;
     cursor: pointer;
     overflow: hidden;
 }
+
 
 .button>img {
     max-height: 35px;
@@ -18,7 +21,6 @@
 
 .button:global(.button--primary) {
     background-color: var(--clr-theme);
-    border: 2px solid var(--clr-theme);
 }
 
 .button:global(.button--secondary) {
@@ -26,15 +28,16 @@
 }
 
 .button:global(.button--functional) {
+    font-size: .9rem;
+    font-weight: var(--fw-reg);
     background-color: var(--clr-dark);
     border-radius: 2em;
     display: flex;
     align-items: center;
-    font-size: .9rem;
 }
 
 .button:global(.button--functional)>img {
-    height: 30px;
+    height: 20px;
     margin-right: .5em;
     display: inline-block;
 }
@@ -66,7 +69,7 @@
 }
 
 .button:hover {
-    background-color: var(--clr-theme-dark);
+    background-color: var(--clr-theme-light);
 }
 
 .button:disabled {

@@ -1,17 +1,17 @@
-import { createContext, useContext, useState, useEffect } from "react";
-import { useNavigate } from "react-router";
-import axios from "axios";
-import { toast } from "react-toastify";
-import myToast from "../utils/customToast";
-import { BASE_URL } from "../utils/baseurl";
+import { createContext, useContext, useState, useEffect } from "react"
+import { useNavigate } from "react-router"
+import axios from "axios"
+import { toast } from "react-toastify"
+import myToast from "../utils/customToast"
+import { BASE_URL } from "../utils/baseurl"
 
-const AuthContext = createContext();
+const AuthContext = createContext()
 
 function AuthProvider({ children }) {
-  const navigate = useNavigate();
-  const [user, setUser] = useState(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isLoading, setIsLoading] = useState(null);
+  const navigate = useNavigate()
+  const [user, setUser] = useState(null)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [isLoading, setIsLoading] = useState(null)
 
   //signup
   async function signup(username, email, password) {
@@ -21,25 +21,25 @@ function AuthProvider({ children }) {
       data: {
         username: username,
         email: email,
-        password: password,
-      },
-    };
+        password: password
+      }
+    }
     try {
-      setIsLoading(true);
-      const res = await axios(configuration);
-      const data = res.data;
+      setIsLoading(true)
+      const res = await axios(configuration)
+      const data = res.data
       if (data.status === "success") {
-        setIsAuthenticated(true);
-        setUser(res.data.data.user);
-        localStorage.setItem("token", data.data.token);
+        setIsAuthenticated(true)
+        setUser(res.data.data.user)
+        localStorage.setItem("token", data.data.token)
         toast.success("Signed UP successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-        });
+          position: toast.POSITION.TOP_RIGHT
+        })
       }
     } catch (err) {
-      myToast("error", err.response.data.message);
+      myToast("error", err.response.data.message)
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
   }
 
@@ -50,68 +50,69 @@ function AuthProvider({ children }) {
       url: `${BASE_URL}users/login`,
       data: {
         email,
-        password,
-      },
-    };
+        password
+      }
+    }
     try {
-      setIsLoading(true);
-      myToast("info", "Please wait a moment");
-      const res = await axios(configuration);
+      setIsLoading(true)
+      myToast("info", "Please wait a moment")
+      const res = await axios(configuration)
       if (res.data.status === "success") {
-        localStorage.setItem("token", res.data.data.token);
-        localStorage.setItem("user", JSON.stringify(res.data.data.user));
-        setIsAuthenticated(true);
-        setUser(res.data.data.user);
-        navigate("/", { replace: true });
-        myToast("success", "Logged in successfully");
+        localStorage.setItem("token", res.data.data.token)
+        localStorage.setItem("user", JSON.stringify(res.data.data.user))
+        setIsAuthenticated(true)
+        setUser(res.data.data.user)
+        navigate("/", { replace: true })
+        myToast("success", "Logged in successfully")
       }
     } catch (err) {
-      console.log(err);
-      myToast("error", err.response.data.message);
+      console.log(err)
+      myToast("error", err.response.data.message)
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
   }
 
   //logout
   const logout = () => {
-    localStorage.clear();
-    setIsAuthenticated(false);
-    setUser(null);
-    myToast("success", "Logged out");
-  };
+    localStorage.clear()
+    setIsAuthenticated(false)
+    setUser(null)
+    myToast("success", "Logged out")
+    navigate("/")
+  }
 
   useEffect(() => {
-    setIsLoading(true);
+    setIsLoading(true)
     const getUser = async () => {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("token")
       try {
         const configuration = {
           method: "GET",
           url: `${BASE_URL}users/my/profile`,
           headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        };
-        const res = await axios(configuration);
-        const data = res.data;
-        console.log(data);
+            Authorization: `Bearer ${token}`
+          }
+        }
+        const res = await axios(configuration)
+        const data = res.data
+        console.log(data)
         if (data.status === "success") {
-          setUser(data.data.user);
-          setIsAuthenticated(true);
-          myToast("success", "Welcome back");
+          setUser(data.data.user)
+          setIsAuthenticated(true)
+          myToast("success", "Welcome back")
         } else {
-          setUser(null);
-          setIsAuthenticated(false);
+          setUser(null)
+          setIsAuthenticated(false)
         }
       } catch (err) {
-        console.log(err);
+        console.log(err)
       } finally {
-        setIsLoading(false);
+        setIsLoading(false)
       }
-    };
-    getUser();
-  }, []);
+    }
+    getUser()
+  }, [])
 
   const value = {
     login,
@@ -120,18 +121,18 @@ function AuthProvider({ children }) {
     user,
     setUser,
     isAuthenticated,
-    isLoading,
-  };
+    isLoading
+  }
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
 
 function useAuth() {
-  const context = useContext(AuthContext);
+  const context = useContext(AuthContext)
   if (context === undefined) {
-    throw new Error("Auth context was used outside the AuthProvider");
+    throw new Error("Auth context was used outside the AuthProvider")
   }
-  return context;
+  return context
 }
 
-export { AuthProvider, useAuth };
+export { AuthProvider, useAuth }

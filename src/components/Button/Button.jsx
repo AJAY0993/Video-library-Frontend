@@ -22,11 +22,7 @@ export function BackButton() {
   const navigate = useNavigate();
   return (
     <Button className="button--secondary g-1" onClick={() => navigate(-1)}>
-      <img
-        src="https://i.ibb.co/59dBCxk/return.png"
-        alt="return"
-        border="0"
-      ></img>
+      <img src="https://i.ibb.co/59dBCxk/return.png" alt="return" />
       Back
     </Button>
   );

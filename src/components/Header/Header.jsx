@@ -1,11 +1,12 @@
-import { useNavigate } from "react-router-dom";
-import styles from "./Header.module.css";
-import { useAuth } from "../../context/AuthContext";
-import Button from "../Button/Button";
+import { useNavigate } from "react-router-dom"
+import styles from "./Header.module.css"
+import { useAuth } from "../../context/AuthContext"
+import Button from "../Button/Button"
 
 function Header() {
-  const { isAuthenticated, logout, isLoading } = useAuth();
-  const navigate = useNavigate();
+  const { isAuthenticated, logout, isLoading } = useAuth()
+  const navigate = useNavigate()
+
   return (
     <header className={styles.headerContainer}>
       <div className={`${styles.header}`}>
@@ -52,10 +53,10 @@ function Header() {
         </ul>
       </div>
     </header>
-  );
+  )
 }
 
-export default Header;
+export default Header
 
 // <li>
 // <Link className={styles.link} to="/signin">
