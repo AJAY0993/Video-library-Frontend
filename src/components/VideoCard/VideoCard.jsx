@@ -1,8 +1,9 @@
-import { useState } from "react"
 import { useNavigate } from "react-router"
 import DropDown from "../DropDown/DropDown"
 import styles from "./VideoCard.module.css"
 import timeAgo from "../../utils/timeAgo"
+import { HiDotsVertical } from "react-icons/hi"
+import { IoMdClose } from "react-icons/io"
 
 function VideoCard({ video, openDropDownId, toggleDropDownId }) {
   const isDropDown = video._id === openDropDownId
@@ -31,14 +32,7 @@ function VideoCard({ video, openDropDownId, toggleDropDownId }) {
         </ul>
         <div className={styles.dropDownWrapper}>
           <button className={styles.videoCardFuncBtn} onClick={toggleDropDown}>
-            <img
-              src={
-                isDropDown
-                  ? "/Images/icons/close.png"
-                  : "/Images/icons/dots.png"
-              }
-              alt={isDropDown ? "close" : "open"}
-            />
+            {isDropDown ? <IoMdClose /> : <HiDotsVertical />}
           </button>
           {isDropDown && <DropDown videoId={video._id} />}
         </div>

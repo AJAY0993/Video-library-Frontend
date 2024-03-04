@@ -1,7 +1,11 @@
+import extractFirstFromArray from "../utils/extractFirstFromArray"
+import filterPlaylists from "../utils/filterPlaylists"
 import initialState from "./initialState"
 
 export default function reducer(state, action) {
   switch (action.type) {
+    case "SET_LOADER":
+      return { ...state, isLoading: action.payload }
     case "SET_VIDEOS":
       return { ...state, videos: action.payload }
     case "SET_FILTER":
@@ -9,9 +13,23 @@ export default function reducer(state, action) {
     case "SET_CATEGORIES":
       return { ...state, genres: action.payload, isLoading: false }
     case "SET_LIKED":
-      return { ...state, liked: action.payload, isLoading: false }
-    case "SET_LOADER":
-      return { ...state, isLoading: action.payload }
+      return {
+        ...state,
+        liked: extractFirstFromArray(action.payload),
+        isLoading: false
+      }
+    case "ADD_VIDEO_TO_LIKED":
+      return {
+        ...state,
+        liked: [...state.liked, action.payload],
+        isLoading: false
+      }
+    case "REMOVE_VIDEO_FROM_LIKED":
+      return {
+        ...state,
+        liked: state.liked.filter((video) => video._id !== action.payload),
+        isLoading: false
+      }
     case "SET_HISTORY":
       return { ...state, history: action.payload, isLoading: false }
     case "ADD_VIDEO_TO_HISTORY":
@@ -20,10 +38,14 @@ export default function reducer(state, action) {
       return { ...state, history: action.payload, isLoading: false }
     case "CLEAR_HISTORY":
       return { ...state, history: action.payload }
-    case "VIDEO_SELECTED":
+    case "SET_SELECTED_VIDEO":
       return { ...state, selectedVideo: action.payload }
     case "SET_PLAYLISTS":
-      return { ...state, playlists: action.payload, isLoading: false }
+      return {
+        ...state,
+        playlists: filterPlaylists(action.payload),
+        isLoading: false
+      }
     case "CREATED_PLAYLIST":
       return {
         ...state,
@@ -36,8 +58,12 @@ export default function reducer(state, action) {
       return { ...state, playlists: action.payload, isLoading: false }
     case "REMOVE_VIDEO_FROM_PLAYLIST":
       return { ...state, playlistVideos: action.payload, isLoading: false }
-    case "GET_WATCHLATER":
-      return { ...state, watchLater: action.payload, isLoading: false }
+    case "SET_WATCHLATER":
+      return {
+        ...state,
+        watchLater: extractFirstFromArray(action.payload),
+        isLoading: false
+      }
     case "ADD_VIDEO_TO_WATCHLATER":
       return { ...state, watchLater: action.payload, isLoading: false }
     case "REMOVE_VIDEO_FROM_WATCHLATER":

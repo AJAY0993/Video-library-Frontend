@@ -1,26 +1,26 @@
-import { useNavigate } from "react-router";
-import Button from "../Button/Button";
-import styles from "./PlaylistCard.module.css";
-import { useData } from "../../context/DataContext";
-import { useAuth } from "../../context/AuthContext";
+import { useNavigate } from "react-router"
+import Button from "../Button/Button"
+import styles from "./PlaylistCard.module.css"
+import { useData } from "../../context/DataContext"
+import { useAuth } from "../../context/AuthContext"
 
 function PlaylistCard({ playlist }) {
-  const navigate = useNavigate();
-  const { user } = useAuth();
-  const { state, reducerFunc, dispatch } = useData();
+  const navigate = useNavigate()
+  const { user } = useAuth()
+  const { state, reducerFunc, dispatch } = useData()
   const view = () => {
-    navigate(`${playlist._id}`);
-  };
+    navigate(`${playlist._id}`)
+  }
 
   const deletePlaylist = () => {
     reducerFunc.deletePlaylist(
       {
         state,
-        action: { payload: { playlistId: playlist._id, userId: user._id } },
+        action: { payload: { playlistId: playlist._id, userId: user._id } }
       },
       dispatch
-    );
-  };
+    )
+  }
 
   return (
     <article className={styles.card}>
@@ -47,7 +47,7 @@ function PlaylistCard({ playlist }) {
         </Button>
       </div>
     </article>
-  );
+  )
 }
 
-export default PlaylistCard;
+export default PlaylistCard

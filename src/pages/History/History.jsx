@@ -1,16 +1,18 @@
-import { useNavigate } from "react-router";
-import Button from "../../components/Button/Button";
-import Layout from "../../components/Layout/Layout";
-import NotLoggedIn from "../../components/NotLoggedIn/NotLoggedIn";
-import VideosContainer from "../../components/CardsContainer/CardsContainer";
-import { useAuth } from "../../context/AuthContext";
-import { useData } from "../../context/DataContext";
-import NothingToSee from "../../components/NothingToSee/NothingToSee";
+import { useNavigate } from "react-router"
+import Button from "../../components/Button/Button"
+import Layout from "../../components/Layout/Layout"
+import NotLoggedIn from "../../components/NotLoggedIn/NotLoggedIn"
+import CardsContainer from "../../components/CardsContainer/CardsContainer"
+import { useAuth } from "../../context/AuthContext"
+import { useData } from "../../context/DataContext"
+import NothingToSee from "../../components/NothingToSee/NothingToSee"
+import MyLoader from "../../components/MyLoader/MyLoader"
 
 function History() {
-  const { isAuthenticated } = useAuth();
-  const { state, reducerFunc, history, dispatch } = useData();
+  const { isAuthenticated } = useAuth()
+  const { state, reducerFunc, history, isLoading, dispatch } = useData()
 
+  if (isLoading) return <MyLoader />
   return (
     <Layout>
       <section className="page">
@@ -29,12 +31,12 @@ function History() {
                 🗑️Clear history
               </Button>
             }
-            <VideosContainer videos={history} />
+            <CardsContainer videos={history} />
           </>
         )}
       </section>
     </Layout>
-  );
+  )
 }
 
-export default History;
+export default History

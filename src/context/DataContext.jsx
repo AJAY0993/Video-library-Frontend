@@ -1,6 +1,4 @@
-import axios from "axios"
 import { createContext, useContext, useEffect, useReducer } from "react"
-import { BASE_URL } from "./../utils/baseurl"
 import { useAuth } from "./AuthContext"
 import * as playlistReducer from "./../reducer/playlist"
 import * as historyReducer from "./../reducer/history"
@@ -11,35 +9,10 @@ import fetchData from "../utils/fetchData"
 
 const DataContext = createContext()
 
-async function getLiked({ state, action }, dispatch) {
-  dispatch({ type: "SET_LOADER", payload: true })
-  const token = localStorage.getItem("token")
-  const configuration = {
-    method: "GET",
-    url: `${BASE_URL}users/${action.payload}/playlists?playlistName=liked`,
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  }
-  try {
-    const res = await axios(configuration)
-    const data = res.data
-    const liked = data.data.playlists[0].videos
-    dispatch({ type: "SET_LIKED", payload: liked })
-  } catch (err) {
-    console.log(err)
-  }
-}
-
-function setSelectedVideo({ state, action: { payload: id } }, dispatch) {
-  dispatch({ type: "VIDEO_SELECTED", payload: id })
-}
 const reducerFunc = {
-  getLiked,
   ...historyReducer,
   ...playlistReducer,
-  ...watchlaterReducer,
-  setSelectedVideo
+  ...watchlaterReducer
 }
 
 function DataProvider({ children }) {
@@ -71,24 +44,27 @@ function DataProvider({ children }) {
 
   useEffect(() => {
     isAuthenticated &&
-      getLiked({ state, action: { payload: user._id } }, dispatch)
-  }, [isAuthenticated])
-
-  useEffect(() => {
-    isAuthenticated &&
-      watchlaterReducer.getWatchLater(
-        { state, action: { payload: user._id } },
+      fetchData(
+        `users/${user._id}/playlists?playlistName=liked`,
+        "SET_LIKED",
+        "playlists",
         dispatch
       )
   }, [isAuthenticated])
 
   useEffect(() => {
     isAuthenticated &&
-      historyReducer.getHistory(
-        { undefined, action: { payload: user._id } },
+      fetchData(
+        `users/${user._id}/playlists?playlistName=watchLater`,
+        "SET_WATCHLATER",
+        "playlists",
         dispatch
       )
-  }, [isAuthenticated, user])
+  }, [isAuthenticated])
+
+  useEffect(() => {
+    isAuthenticated && historyReducer.getHistory(undefined, dispatch)
+  }, [isAuthenticated])
 
   return (
     <DataContext.Provider value={{ state, reducerFunc, dispatch, ...state }}>

@@ -4,6 +4,7 @@ import axios from "axios"
 import { toast } from "react-toastify"
 import myToast from "../utils/customToast"
 import { BASE_URL } from "../utils/baseurl"
+import MyLoader from "../components/MyLoader/MyLoader"
 
 const AuthContext = createContext()
 
@@ -60,8 +61,9 @@ function AuthProvider({ children }) {
       if (res.data.status === "success") {
         localStorage.setItem("token", res.data.data.token)
         localStorage.setItem("user", JSON.stringify(res.data.data.user))
-        setIsAuthenticated(true)
         setUser(res.data.data.user)
+        console.log(res.data.data.user)
+        setIsAuthenticated(true)
         navigate("/", { replace: true })
         myToast("success", "Logged in successfully")
       }
@@ -123,7 +125,6 @@ function AuthProvider({ children }) {
     isAuthenticated,
     isLoading
   }
-
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
 

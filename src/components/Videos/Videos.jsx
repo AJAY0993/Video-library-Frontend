@@ -1,26 +1,28 @@
-import { useState } from "react";
-import { useData } from "../../context/DataContext";
-import Button from "../Button/Button";
-import CardsContainer from "../CardsContainer/CardsContainer";
-import GenreBar from "./../GenreBar/GenreBar";
-import fetchData from "../../utils/fetchData";
+import { useState } from "react"
+import { useData } from "../../context/DataContext"
+import Button from "../Button/Button"
+import CardsContainer from "../CardsContainer/CardsContainer"
+import GenreBar from "./../GenreBar/GenreBar"
+import fetchData from "../../utils/fetchData"
+import MyLoader from "../MyLoader/MyLoader"
+import { IoMdSearch } from "react-icons/io"
 
 function Videos() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const { dispatch, videos } = useData();
+  const [searchQuery, setSearchQuery] = useState("")
+  const { dispatch, videos, isLoading } = useData()
 
   const search = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     await fetchData(
       `videos?search=${searchQuery}`,
       "SET_VIDEOS",
       "videos",
       dispatch
-    );
-    setSearchQuery("");
-  };
+    )
+    setSearchQuery("")
+  }
 
-  const handleInputchange = (e) => setSearchQuery(e.target.value);
+  const handleInputchange = (e) => setSearchQuery(e.target.value)
 
   return (
     <section>
@@ -32,7 +34,7 @@ function Videos() {
       <GenreBar />
       <CardsContainer videos={videos} />
     </section>
-  );
+  )
 }
 
 function VideoSearchForm({ value, onSubmit, onChange }) {
@@ -45,11 +47,11 @@ function VideoSearchForm({ value, onSubmit, onChange }) {
         onChange={onChange}
       />
       &nbsp;
-      <Button className="button--circle" onClick={onSubmit}>
-        <img src="Images/icons/search.png" alt="" />
+      <Button className="button button--circle" onClick={onSubmit}>
+        <IoMdSearch fontSize={"1.5rem"} />
       </Button>
     </form>
-  );
+  )
 }
 
-export default Videos;
+export default Videos

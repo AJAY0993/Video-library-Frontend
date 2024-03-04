@@ -8,7 +8,6 @@ import { useAuth } from "../../context/AuthContext"
 import MyLoader from "./../MyLoader/MyLoader"
 import VideoCard from "../VideoCard/VideoCard"
 import Button from "../Button/Button"
-import initialComments from "../../utils/comments"
 import timeAgo from "../../utils/timeAgo"
 import myToast from "../../utils/customToast"
 import throttler from "./../../utils/throttler"
@@ -18,7 +17,7 @@ import { BASE_URL } from "../../utils/baseurl"
 import { copyToClipboard } from "../../utils/copyToClipboard"
 
 function VideoPlayer() {
-  const { state, reducerFunc, dispatch, liked } = useData()
+  const { state, reducerFunc, dispatch } = useData()
   const { isAuthenticated, user } = useAuth()
   const [currentCategory, setCurrentCategory] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
@@ -26,7 +25,7 @@ function VideoPlayer() {
   const [show, setShow] = useState(false)
   const [likes, setLikes] = useState(0)
   const [comment, setComment] = useState("")
-  const [comments, setComments] = useState(initialComments)
+  const [comments, setComments] = useState([])
   const { id } = useParams()
 
   //like video
@@ -42,6 +41,11 @@ function VideoPlayer() {
     }
     const res = await axios(configurations)
     const data = res.data
+    if (data.message.toLowerCase() === "video liked successfully") {
+      dispatch({ type: "ADD_VIDEO_TO_LIKED", payload: vod })
+    } else {
+      dispatch({ type: "REMOVE_VIDEO_FROM_LIKED", payload: vod._id })
+    }
     setLikes((s) => data.data.likes)
     myToast("success", data.message)
   }, 500)
@@ -80,7 +84,7 @@ function VideoPlayer() {
   //add video to history
   useEffect(() => {
     isAuthenticated && reducerFunc.addVideoToHistory({ videoId: id }, dispatch)
-  }, [id])
+  }, [id, isAuthenticated])
 
   //Fetch comments
   useEffect(() => {

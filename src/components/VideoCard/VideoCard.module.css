@@ -1,23 +1,21 @@
 .card {
-    position: relative;
-    width: 350px;
-    max-width: 100%;
+    width: 380px;
+    max-width: calc(100vw - 2rem);
     align-self: flex-start;
-    border-radius: 1em;
-    margin: 1em;
-    position: relative;
 }
 
 .card .cardImg {
-    height: 175px;
     width: 100%;
-    border-top-left-radius: 1em;
-    border-top-right-radius: 1em;
+    aspect-ratio: 9/5;
+    border-radius: .5em;
     object-fit: cover;
+    cursor: pointer;
 }
+
 
 .cardContent {
     padding: .5em 1em;
+    position: relative;
 }
 
 .title {
@@ -40,31 +38,22 @@
 
 .dropDownWrapper {
     position: absolute;
-    top: calc(175px + 1.5rem);
+    top: 1rem;
     right: 10px;
 }
 
 .videoCardFuncBtn {
-    height: 40px;
-    width: 40px;
+    aspect-ratio: 1/1;
+    color: var(--clr-light);
+    font-size: 1.2rem;
     background: transparent;
     border-radius: 50px;
     border: 0;
     cursor: pointer;
 }
 
-.videoCardFuncBtn>img {
-    max-height: 100%;
-}
-
 @media (width>600px) {
-    .card:hover {
-        box-shadow: 5px 5px var(--clr-light);
-        transition: .1s ease-in;
-        transform: translate(-5px, -5px);
-        cursor: pointer;
-        z-index: 10;
-    }
+
 
     .card:hover .videoCardFuncBtn {
         display: block;
