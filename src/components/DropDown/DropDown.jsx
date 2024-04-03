@@ -47,8 +47,8 @@ function DropDown({ videoId }) {
   //Save video to playlist
   const saveToPlaylist = () => {
     if (!isAuthenticated) return myToast("error", "Please log in")
-    dispatch({ type: "SET_MODAL_TYPE", payload: "addToPlaylist" })
     dispatch({ type: "SET_SELECTED_VIDEO", payload: videoId })
+    dispatch({ type: "SET_MODAL_TYPE", payload: "addToPlaylist" })
     dispatch({ type: "OPEN_MODAL" })
   }
 

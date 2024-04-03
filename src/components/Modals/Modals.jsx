@@ -1,34 +1,31 @@
-import styles from "./Modals.module.css";
-import { useState } from "react";
-import { useData } from "../../context/DataContext";
-import Button from "../Button/Button";
-import { useAuth } from "../../context/AuthContext";
+import { useParams } from "react-router"
+import { useState } from "react"
+import { useData } from "../../context/DataContext"
+import { useAuth } from "../../context/AuthContext"
+import Button from "../Button/Button"
+import styles from "./Modals.module.css"
 
 export function AddToPlaylist() {
-  const { user } = useAuth();
-  const { state, reducerFunc, dispatch, playlists, selectedVideo } = useData();
+  const { user } = useAuth()
+  const { id: videoId } = useParams()
+  const { reducerFunc, dispatch, playlists, selectedVideo } = useData()
   const myPlaylists = playlists.filter(
     (playlist) =>
       playlist.name !== "liked" &&
       playlist.name !== "watchLater" &&
       playlist.name !== "disliked"
-  );
+  )
 
   const addVideoToPlaylist = (id) => {
     reducerFunc.addVideoToPlaylist(
-      {
-        state,
-        action: {
-          payload: { playlistId: id, videoId: selectedVideo, userId: user._id },
-        },
-      },
+      { playlistId: id, videoId: videoId || selectedVideo, userId: user._id },
       dispatch
-    );
-  };
+    )
+  }
 
   const openCreatePlaylist = () => {
-    dispatch({ type: "SET_MODAL_TYPE", payload: "createPlaylist" });
-  };
+    dispatch({ type: "SET_MODAL_TYPE", payload: "createPlaylist" })
+  }
 
   return (
     <div className={styles.container}>
@@ -39,7 +36,7 @@ export function AddToPlaylist() {
             <li key={i + 1} onClick={() => addVideoToPlaylist(playlist._id)}>
               {playlist.name}
             </li>
-          );
+          )
         })}
       </ul>
 
@@ -47,21 +44,18 @@ export function AddToPlaylist() {
         Create New
       </Button>
     </div>
-  );
+  )
 }
 
 export function CreatePlaylist() {
-  const [playlistName, setPlaylistName] = useState();
-  const { state, reducerFunc, dispatch } = useData();
-  const { user } = useAuth();
+  const [playlistName, setPlaylistName] = useState()
+  const { reducerFunc, dispatch } = useData()
+  const { user } = useAuth()
   const createPlaylist = () =>
     reducerFunc.createPlaylist(
-      {
-        state,
-        action: { payload: { name: playlistName, userId: user._id } },
-      },
+      { name: playlistName, userId: user._id },
       dispatch
-    );
+    )
 
   return (
     <div className={styles.container}>
@@ -82,5 +76,5 @@ export function CreatePlaylist() {
         </Button>
       </div>
     </div>
-  );
+  )
 }

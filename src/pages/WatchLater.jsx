@@ -5,11 +5,10 @@ import NothingToSee from "../components/NothingToSee/NothingToSee"
 import CardsContainer from "../components/CardsContainer/CardsContainer"
 import { useAuth } from "../context/AuthContext"
 import { useData } from "../context/DataContext"
-import MyLoader from "../components/MyLoader/MyLoader"
 
 function WatchLater() {
   const { isAuthenticated } = useAuth()
-  const { watchLater, isLoading } = useData()
+  const { watchLater } = useData()
   return (
     <Layout>
       <section className="page">
@@ -18,7 +17,6 @@ function WatchLater() {
         ) : (
           <>
             <BackButton />
-            {isLoading && <MyLoader />}
             {isAuthenticated && watchLater.length < 1 && <NothingToSee />}
             {isAuthenticated && watchLater.length > 0 && (
               <CardsContainer videos={watchLater} />

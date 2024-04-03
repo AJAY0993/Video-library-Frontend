@@ -6,27 +6,23 @@ import CardsContainer from "../../components/CardsContainer/CardsContainer"
 import { useAuth } from "../../context/AuthContext"
 import { useData } from "../../context/DataContext"
 import NothingToSee from "../../components/NothingToSee/NothingToSee"
-import MyLoader from "../../components/MyLoader/MyLoader"
 
 function History() {
   const { isAuthenticated } = useAuth()
-  const { state, reducerFunc, history, isLoading, dispatch } = useData()
+  const { state, reducerFunc, history, dispatch } = useData()
 
-  if (isLoading) return <MyLoader />
   return (
     <Layout>
       <section className="page">
         {!isAuthenticated && <NotLoggedIn />}
 
         {isAuthenticated && history.length < 1 && <NothingToSee />}
-        {isAuthenticated && history.length > 0 && !state.isLoading && (
+        {isAuthenticated && history.length > 0 && (
           <>
             {
               <Button
                 className="button--primary"
-                onClick={() =>
-                  reducerFunc.clearHistory({ state, action: {} }, dispatch)
-                }
+                onClick={() => reducerFunc.clearHistory(null, dispatch)}
               >
                 🗑️Clear history
               </Button>
